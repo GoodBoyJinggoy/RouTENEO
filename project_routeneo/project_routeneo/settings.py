@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+# https://www.youtube.com/watch?v=c-QsfbznSXI
+
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
