@@ -1,6 +1,6 @@
 # RouTENEO
 
-**Last updated:** February 24, 2026
+**Last updated:** February 27, 2026
 
 Welcome! This guide will help you set up the **Django backend** and **frontend** for the RouTENEO project. The instructions below assume a Windows environment.
 
@@ -32,7 +32,8 @@ py -m venv venv
 pip install -r requirements.txt
 ```
 
-5. **Create a `.env` file**
+## Backend
+1. **Create a `.env` file**
 
 * Go to the folder `project_routeneo` (same folder as `manage.py`).
 * Create a file named `.env`.
@@ -47,7 +48,7 @@ STATIC_ROOT='static/'
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```
 
-6. **Run the Django server**
+2. **Run the Django server**
 
 ```bash
 py manage.py runserver
