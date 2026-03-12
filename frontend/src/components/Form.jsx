@@ -130,6 +130,16 @@ function Form({ route, method }) {
   )}
 
   <button
+    onClick={() => navigate("/guest")}
+    disable={loading}
+    className="w-full bg-indigo-500 text-white py-3 rounded-xl font-semibold
+               hover:bg-indigo-600 active:scale-95 transition-all duration-200
+               disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    Use RouTENEO as Guest
+  </button>
+
+  <button
     type="submit"
     disabled={loading}
     className="w-full bg-indigo-500 text-white py-3 rounded-xl font-semibold

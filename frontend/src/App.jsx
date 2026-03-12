@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Home from "./pages/Home"
+import GuestHome from "./pages/GuestHome"
 import ProtectedRoute from "./components/ProtectedRoute"
 
 function Logout() {
@@ -26,9 +27,10 @@ function App(){
               </ProtectedRoute>
             }
         />
+        <Route path="/guest" element={<GuestHome />}/>
         <Route path="/logout" element={<Logout />}/>
         <Route path="/login" element={<Login />}/>
-        <Route path="/register" element={<RegisterAndLogout/>}/>
+        <Route path="/register" element={<RegisterAndLogout />}/>
       </Routes>
     </BrowserRouter>
   )
