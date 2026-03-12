@@ -61,7 +61,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'accounts',
     'corsheaders',
-    "django.contribs.gis",
     "rest_framework_gis",
     "map",
 ]
