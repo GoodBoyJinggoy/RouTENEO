@@ -1,12 +1,15 @@
-import { MapContainer,TileLayer, Polygon } from "react-leaflet"
+import { MapContainer,TileLayer, Polygon, Marker, Popup } from "react-leaflet"
 import "leaflet/dist/leaflet.css";
+import { Icon } from "leaflet";
+import pinIcon from "../assets/img/location-pin.png";
 
 function Home() {
   const firstName = localStorage.getItem("first_name") || "User"
   const lastName = localStorage.getItem("last_name") || ""
 
   const ateneoBoundary = [
-    [14.641668, 121.074818],
+    [14.641585, 121.074739],
+    [14.641025, 121.074700],
     [14.634565, 121.074533],
     [14.634538, 121.075393],
     [14.633976, 121.075326],
@@ -36,7 +39,9 @@ function Home() {
     [14.642253, 121.079183],
     [14.642180, 121.077768],
     [14.642176, 121.076099],
-    [14.642330, 121.075651]
+    [14.642330, 121.075651],
+    
+    
   ];
 
   const worldMask = [
@@ -54,13 +59,49 @@ function Home() {
     [14.6475, 121.0845] 
   ];
 
+  const markers = [
+  { geocode:[14.634666,121.074539], popUp:"Gate 1" },
+  { geocode:[14.635807,121.074598], popUp:"Gate 2" },
+  { geocode:[14.64053,121.074687], popUp:"Gate 3.5" },
+  { geocode:[14.634463,121.076798], popUp:"Ateneo Grade School" },
+  { geocode:[14.63491,121.075553], popUp:"Blue Eagle Gym" },
+  { geocode:[14.641337,121.075958], popUp:"Arete Museum" },
+  { geocode:[14.636929,121.078565], popUp:"Covered Courts" },
+  { geocode:[14.641579,121.079373], popUp:"Bellarmine Hall" },
+  { geocode:[14.636139,121.077589], popUp:"Manila Observatory" },
+  { geocode:[14.640843,121.076296], popUp:"Leong Hall" },
+  { geocode:[14.640116,121.078463], popUp:"Xavier Hall" },
+  { geocode:[14.640191,121.078045], popUp:"Faber Hall" },
+  { geocode:[14.640261,121.077291], popUp:"Old Rizal Library" },
+  { geocode:[14.640619,121.076691], popUp:"Social Sciences Building" },
+  { geocode:[14.639757,121.078088], popUp:"Kostka Hall" },
+  { geocode:[14.639734,121.077704], popUp:"MVP Center" },
+  { geocode:[14.640009,121.076961], popUp:"Dela Costa Hall" },
+  { geocode:[14.640001,121.076243], popUp:"New Rizal Library" },
+  { geocode:[14.63948,121.078303], popUp:"Berchmans Hall" },
+  { geocode:[14.639506,121.077004], popUp:"Faura Hall" },
+  { geocode:[14.639145,121.077578], popUp:"Schmitt Hall" },
+  { geocode:[14.638963,121.078008], popUp:"Gonzaga Hall" },
+  { geocode:[14.638808,121.076784], popUp:"PIPAC" },
+  { geocode:[14.638507,121.077576], popUp:"SEC A" },
+  { geocode:[14.638172,121.077197], popUp:"SEC B" },
+  { geocode:[14.638283,121.076953], popUp:"SEC C" },
+  { geocode:[14.638382,121.076733], popUp:"PLDT-CTC" },
+  { geocode:[14.638452,121.076422], popUp:"JGSOM" },
+  { geocode:[14.637892,121.076503], popUp:"JSEC" },
+  { geocode:[14.637596,121.076988], popUp:"Matteo Ricci Hall" }
+];
+
+  const customIcon= new Icon({
+    iconUrl: pinIcon,
+    iconSize:[20,20]
+  });
 
   return (
     <div>
-      <h1>
-        Welcome, User!
+      <h1>Welcome, User!</h1>
 
-        <div className="m-4">
+        <div className="m-4 border-2 border-black-500">
             <MapContainer
               center={[14.6396,121.0786]}
               zoom={17}
@@ -77,21 +118,25 @@ function Home() {
 
               <Polygon
                 positions={ateneoBoundary}
-                pathOptions={{ color: "blue", weight: 4,fill: false }}
+                pathOptions={{ color: "blue", weight: 2,fill: false }}
               />
 
               <Polygon
                 positions={worldMask}
                 pathOptions={{
-                  fillColor: "black",
+                  fillColor: "grey",
                   fillOpacity: 0.5,
                   stroke: false
                 }}
               />
-            </MapContainer>
 
+              {markers.map((marker, index) => (
+                <Marker key={index} position={marker.geocode} icon={customIcon}>
+                  <Popup>{marker.popUp}</Popup>
+                </Marker>
+              ))}
+            </MapContainer>
         </div>
-      </h1>
     </div>
   )
 }
