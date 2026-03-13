@@ -28,12 +28,7 @@ function Form({ route, method }) {
       const payload =
         method === "login"
           ? { username, password } 
-          : {
-              email: username,
-              password,
-              first_name: firstName,
-              last_name: lastName,
-            }
+          : { email: username, password, first_name: firstName, last_name: lastName }
 
       const res = await api.post(route, payload)
 
@@ -46,8 +41,8 @@ function Form({ route, method }) {
         navigate("/login")
       }
     } catch (error) {
-      console.log(error)
-      alert("Error: " + error.response?.data?.detail || error.message)
+      console.error(error)
+      alert("Error: " + (error.response?.data?.detail || error.message))
     } finally {
       setLoading(false)
     }
@@ -55,100 +50,113 @@ function Form({ route, method }) {
 
   return (
     <form
-  onSubmit={handleSubmit}
-  className="max-w-md mx-auto mt-10 bg-white p-8 rounded-2xl shadow-lg space-y-5"
->
-  <h1 className="text-3xl font-bold text-center text-gray-800">{name}</h1>
+      onSubmit={handleSubmit}
+      className="max-w-md mx-auto mt-10 bg-white p-8 rounded-2xl shadow-lg space-y-5"
+    >
+      <h1 className="text-3xl font-bold text-center text-gray-800">{name}</h1>
 
-  <input
-    type="email"
-    value={username}
-    onChange={(e) => setUsername(e.target.value)}
-    placeholder="Email"
-    required
-    className="w-full px-4 py-3 rounded-xl border border-gray-300
-               focus:outline-none focus:ring-2 focus:ring-indigo-400
-               focus:border-transparent transition-all"
-  />
-
-  {method === "login" && (
-    <input
-      type="password"
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-      placeholder="Password"
-      required
-      className="w-full px-4 py-3 rounded-xl border border-gray-300
-                 focus:outline-none focus:ring-2 focus:ring-indigo-400
-                 focus:border-transparent transition-all"
-    />
-  )}
-
-  {method === "register" && (
-    <>
       <input
-        type="text"
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
-        required
-        placeholder="First Name"
-        className="w-full px-4 py-3 rounded-xl border border-gray-300
-                   focus:outline-none focus:ring-2 focus:ring-indigo-400
-                   transition-all"
-      />
-      <input
-        type="text"
-        value={lastName}
-        required
-        onChange={(e) => setLastName(e.target.value)}
-        placeholder="Last Name"
-        className="w-full px-4 py-3 rounded-xl border border-gray-300
-                   focus:outline-none focus:ring-2 focus:ring-indigo-400
-                   transition-all"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
+        type="email"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Email"
         required
         className="w-full px-4 py-3 rounded-xl border border-gray-300
                    focus:outline-none focus:ring-2 focus:ring-indigo-400
-                   transition-all"
+                   focus:border-transparent transition-all"
       />
-      <input
-        type="password"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-        placeholder="Confirm Password"
-        required
-        className="w-full px-4 py-3 rounded-xl border border-gray-300
-                   focus:outline-none focus:ring-2 focus:ring-indigo-400
-                   transition-all"
-      />
-    </>
-  )}
 
-  <button
-    onClick={() => navigate("/guest")}
-    disable={loading}
-    className="w-full bg-indigo-500 text-white py-3 rounded-xl font-semibold
-               hover:bg-indigo-600 active:scale-95 transition-all duration-200
-               disabled:opacity-50 disabled:cursor-not-allowed"
-  >
-    Use RouTENEO as Guest
-  </button>
+      {method === "login" && (
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          required
+          className="w-full px-4 py-3 rounded-xl border border-gray-300
+                     focus:outline-none focus:ring-2 focus:ring-indigo-400
+                     focus:border-transparent transition-all"
+        />
+      )}
 
-  <button
-    type="submit"
-    disabled={loading}
-    className="w-full bg-indigo-500 text-white py-3 rounded-xl font-semibold
-               hover:bg-indigo-600 active:scale-95 transition-all duration-200
-               disabled:opacity-50 disabled:cursor-not-allowed"
-  >
-    {loading ? "Loading..." : name}
-  </button>
-</form>
+      {method === "register" && (
+        <>
+          <input
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            placeholder="First Name"
+            required
+            className="w-full px-4 py-3 rounded-xl border border-gray-300
+                       focus:outline-none focus:ring-2 focus:ring-indigo-400
+                       transition-all"
+          />
+          <input
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            placeholder="Last Name"
+            required
+            className="w-full px-4 py-3 rounded-xl border border-gray-300
+                       focus:outline-none focus:ring-2 focus:ring-indigo-400
+                       transition-all"
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            required
+            className="w-full px-4 py-3 rounded-xl border border-gray-300
+                       focus:outline-none focus:ring-2 focus:ring-indigo-400
+                       transition-all"
+          />
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Confirm Password"
+            required
+            className="w-full px-4 py-3 rounded-xl border border-gray-300
+                       focus:outline-none focus:ring-2 focus:ring-indigo-400
+                       transition-all"
+          />
+        </>
+      )}
+
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full bg-indigo-500 text-white py-3 rounded-xl font-semibold
+                   hover:bg-indigo-600 active:scale-95 transition-all duration-200
+                   disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {loading ? "Loading..." : name}
+      </button>
+
+      <div className="flex justify-between gap-4">
+        {method === "login" && (
+          <button
+            type="button"
+            onClick={() => navigate("/register")}
+            className="w-full bg-gray-200 text-gray-800 py-3 rounded-xl font-semibold
+                       hover:bg-gray-300 transition-all duration-200"
+          >
+            Register
+          </button>
+        )}
+
+        <button
+          type="button"
+          onClick={() => navigate("/guest")}
+          disabled={loading}
+          className="w-full bg-gray-200 text-gray-800 py-3 rounded-xl font-semibold
+                       hover:bg-gray-300 transition-all duration-200"
+        >
+          Use RouTENEO as Guest
+        </button>
+      </div>
+    </form>
   )
 }
 

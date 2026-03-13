@@ -1,11 +1,35 @@
-import { MapContainer,TileLayer, Polygon, Marker, Popup } from "react-leaflet"
+import { MapContainer,TileLayer, Polygon, Marker, Popup, Polyline } from "react-leaflet"
 import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
 import pinIcon from "../assets/img/location-pin.png";
+import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom"
+
 
 function Home() {
   const firstName = localStorage.getItem("first_name") || "User"
   const lastName = localStorage.getItem("last_name") || ""
+  const navigate = useNavigate()
+  const [from, setFrom] = useState(null);
+  const [to, setTo] = useState(null);
+  const [activeInput, setActiveInput] = useState(null);
+  const inputContainerRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        inputContainerRef.current &&
+        !inputContainerRef.current.contains(event.target)
+      ) {
+        setActiveInput(null);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const ateneoBoundary = [
     [14.641585, 121.074739],
@@ -99,44 +123,95 @@ function Home() {
 
   return (
     <div>
-      <h1>Welcome, Guest!</h1>
+      <div className="m-4 flex flex-col gap-2">
+        <input
+          className={`block w-52 px-3 py-2 rounded-md border transition-all duration-200
+            ${activeInput === "from" ? "border-blue-500 bg-blue-50" : "border-gray-300 bg-white"}
+            focus:border-blue-500 focus:ring-2 focus:ring-blue-300`}
+          type="text"
+          placeholder="From"
+          value={from?.name || ""}
+          onClick={() => setActiveInput("from")}
+          readOnly
+        />
 
-        <div className="m-4 border-2 border-black-500">
-            <MapContainer
-              center={[14.6396,121.0786]}
-              zoom={17}
-              minZoom={16}
-              maxZoom={18}
-              maxBounds={ateneoBounds}
-              maxBoundsViscosity={1.0}
-              style={{ height: "600px", width: "100%" }}
-            >
-              <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
+        <input
+          className={`block w-52 px-3 py-2 rounded-md border transition-all duration-200
+            ${activeInput === "to" ? "border-blue-500 bg-blue-50" : "border-gray-300 bg-white"}
+            focus:border-blue-500 focus:ring-2 focus:ring-blue-300`}
+          type="text"
+          placeholder="To"
+          value={to?.name || ""}
+          onClick={() => setActiveInput("to")}
+          readOnly
+        />
+      </div>
 
-              <Polygon
-                positions={ateneoBoundary}
-                pathOptions={{ color: "blue", weight: 2,fill: false }}
-              />
+      <div ref={inputContainerRef} className="m-4 border-2 border-black-500">
+        <MapContainer
+          center={[14.6396,121.0786]}
+          zoom={17}
+          minZoom={16}
+          maxZoom={18}
+          maxBounds={ateneoBounds}
+          maxBoundsViscosity={1.0}
+          style={{ height: "600px", width: "100%" }}
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
 
-              <Polygon
-                positions={worldMask}
-                pathOptions={{
-                  fillColor: "grey",
-                  fillOpacity: 0.5,
-                  stroke: false
+          <Polygon
+            positions={ateneoBoundary}
+            pathOptions={{ color: "blue", weight: 2,fill: false }}
+          />
+
+          <Polygon
+            positions={worldMask}
+            pathOptions={{
+              fillColor: "grey",
+              fillOpacity: 0.5,
+              stroke: false
+            }}
+          />
+
+          {markers.map((marker, index) => (
+              <Marker
+                key={index}
+                position={marker.geocode}
+                icon={customIcon}
+                eventHandlers={{
+                  click: () => {
+                    if (activeInput === "from") {
+                      setFrom({ name: marker.popUp, coords: marker.geocode });
+                    } else if (activeInput === "to") {
+                      setTo({ name: marker.popUp, coords: marker.geocode });
+                    }
+                  },
                 }}
-              />
+              >
+                <Popup>{marker.popUp}</Popup>
+              </Marker>
+            ))}
 
-              {markers.map((marker, index) => (
-                <Marker key={index} position={marker.geocode} icon={customIcon}>
-                  <Popup>{marker.popUp}</Popup>
-                </Marker>
-              ))}
-            </MapContainer>
-        </div>
+          {from && to && (
+            <Polyline
+              positions={[from.coords, to.coords]}
+              pathOptions={{ color: "red", weight: 4 }}
+            />
+          )}
+        </MapContainer>
+      </div>
+
+      <button
+        onClick={() => navigate("/logout")}
+        className="fixed top-4 right-4 bg-indigo-500 text-white py-2 px-4 rounded-xl font-semibold
+             hover:bg-indigo-600 active:scale-95 transition-all duration-200
+             disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Logout
+      </button>
     </div>
   )
 }
