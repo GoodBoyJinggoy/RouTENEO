@@ -132,7 +132,6 @@ function Home() {
   return (
     <div>
       <div className="m-4 flex flex-col gap-2 relative w-52">
-        {/* FROM INPUT */}
         <div className="relative">
           <input
             className={`block w-52 px-3 py-2 rounded-md border transition-all duration-200
@@ -172,7 +171,6 @@ function Home() {
           )}
         </div>
 
-        {/* TO INPUT */}
         <div className="relative">
           <input
             className={`block w-52 px-3 py-2 rounded-md border transition-all duration-200

@@ -7,13 +7,47 @@ import { useNavigate } from "react-router-dom"
 
 
 function Home() {
-  const firstName = localStorage.getItem("first_name") || "User"
-  const lastName = localStorage.getItem("last_name") || ""
+
+  const markers = [
+  { geocode:[14.634666,121.074539], popUp:"Gate 1" },
+  { geocode:[14.635807,121.074598], popUp:"Gate 2" },
+  { geocode:[14.64053,121.074687], popUp:"Gate 3.5" },
+  { geocode:[14.634463,121.076798], popUp:"Ateneo Grade School" },
+  { geocode:[14.63491,121.075553], popUp:"Blue Eagle Gym" },
+  { geocode:[14.641337,121.075958], popUp:"Arete Museum" },
+  { geocode:[14.636929,121.078565], popUp:"Covered Courts" },
+  { geocode:[14.641579,121.079373], popUp:"Bellarmine Hall" },
+  { geocode:[14.636139,121.077589], popUp:"Manila Observatory" },
+  { geocode:[14.640843,121.076296], popUp:"Leong Hall" },
+  { geocode:[14.640116,121.078463], popUp:"Xavier Hall" },
+  { geocode:[14.640191,121.078045], popUp:"Faber Hall" },
+  { geocode:[14.640261,121.077291], popUp:"Old Rizal Library" },
+  { geocode:[14.640619,121.076691], popUp:"Social Sciences Building" },
+  { geocode:[14.639757,121.078088], popUp:"Kostka Hall" },
+  { geocode:[14.639734,121.077704], popUp:"MVP Center" },
+  { geocode:[14.640009,121.076961], popUp:"Dela Costa Hall" },
+  { geocode:[14.640001,121.076243], popUp:"New Rizal Library" },
+  { geocode:[14.63948,121.078303], popUp:"Berchmans Hall" },
+  { geocode:[14.639506,121.077004], popUp:"Faura Hall" },
+  { geocode:[14.639145,121.077578], popUp:"Schmitt Hall" },
+  { geocode:[14.638963,121.078008], popUp:"Gonzaga Hall" },
+  { geocode:[14.638808,121.076784], popUp:"PIPAC" },
+  { geocode:[14.638507,121.077576], popUp:"SEC A" },
+  { geocode:[14.638172,121.077197], popUp:"SEC B" },
+  { geocode:[14.638283,121.076953], popUp:"SEC C" },
+  { geocode:[14.638382,121.076733], popUp:"PLDT-CTC" },
+  { geocode:[14.638452,121.076422], popUp:"JGSOM" },
+  { geocode:[14.637892,121.076503], popUp:"JSEC" },
+  { geocode:[14.637596,121.076988], popUp:"Matteo Ricci Hall" }
+];
+
   const navigate = useNavigate()
   const [from, setFrom] = useState(null);
   const [to, setTo] = useState(null);
   const [activeInput, setActiveInput] = useState(null);
   const inputContainerRef = useRef(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredMarkers, setFilteredMarkers] = useState(markers);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -30,6 +64,13 @@ function Home() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+  const results = markers.filter((marker) =>
+    marker.popUp.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  setFilteredMarkers(results);
+}, [searchQuery]);
 
   const ateneoBoundary = [
     [14.641585, 121.074739],
@@ -83,39 +124,6 @@ function Home() {
     [14.6475, 121.0845] 
   ];
 
-  const markers = [
-  { geocode:[14.634666,121.074539], popUp:"Gate 1" },
-  { geocode:[14.635807,121.074598], popUp:"Gate 2" },
-  { geocode:[14.64053,121.074687], popUp:"Gate 3.5" },
-  { geocode:[14.634463,121.076798], popUp:"Ateneo Grade School" },
-  { geocode:[14.63491,121.075553], popUp:"Blue Eagle Gym" },
-  { geocode:[14.641337,121.075958], popUp:"Arete Museum" },
-  { geocode:[14.636929,121.078565], popUp:"Covered Courts" },
-  { geocode:[14.641579,121.079373], popUp:"Bellarmine Hall" },
-  { geocode:[14.636139,121.077589], popUp:"Manila Observatory" },
-  { geocode:[14.640843,121.076296], popUp:"Leong Hall" },
-  { geocode:[14.640116,121.078463], popUp:"Xavier Hall" },
-  { geocode:[14.640191,121.078045], popUp:"Faber Hall" },
-  { geocode:[14.640261,121.077291], popUp:"Old Rizal Library" },
-  { geocode:[14.640619,121.076691], popUp:"Social Sciences Building" },
-  { geocode:[14.639757,121.078088], popUp:"Kostka Hall" },
-  { geocode:[14.639734,121.077704], popUp:"MVP Center" },
-  { geocode:[14.640009,121.076961], popUp:"Dela Costa Hall" },
-  { geocode:[14.640001,121.076243], popUp:"New Rizal Library" },
-  { geocode:[14.63948,121.078303], popUp:"Berchmans Hall" },
-  { geocode:[14.639506,121.077004], popUp:"Faura Hall" },
-  { geocode:[14.639145,121.077578], popUp:"Schmitt Hall" },
-  { geocode:[14.638963,121.078008], popUp:"Gonzaga Hall" },
-  { geocode:[14.638808,121.076784], popUp:"PIPAC" },
-  { geocode:[14.638507,121.077576], popUp:"SEC A" },
-  { geocode:[14.638172,121.077197], popUp:"SEC B" },
-  { geocode:[14.638283,121.076953], popUp:"SEC C" },
-  { geocode:[14.638382,121.076733], popUp:"PLDT-CTC" },
-  { geocode:[14.638452,121.076422], popUp:"JGSOM" },
-  { geocode:[14.637892,121.076503], popUp:"JSEC" },
-  { geocode:[14.637596,121.076988], popUp:"Matteo Ricci Hall" }
-];
-
   const customIcon= new Icon({
     iconUrl: pinIcon,
     iconSize:[20,20]
@@ -123,31 +131,87 @@ function Home() {
 
   return (
     <div>
-      <div className="m-4 flex flex-col gap-2">
-        <input
-          className={`block w-52 px-3 py-2 rounded-md border transition-all duration-200
-            ${activeInput === "from" ? "border-blue-500 bg-blue-50" : "border-gray-300 bg-white"}
-            focus:border-blue-500 focus:ring-2 focus:ring-blue-300`}
-          type="text"
-          placeholder="From"
-          value={from?.name || ""}
-          onClick={() => setActiveInput("from")}
-          readOnly
-        />
+      <div className="m-4 flex flex-col gap-2 relative w-52">
+        <div className="relative">
+          <input
+            className={`block w-52 px-3 py-2 rounded-md border transition-all duration-200
+              ${activeInput === "from" ? "border-blue-500 bg-blue-50" : "border-gray-300 bg-white"}
+              focus:border-blue-500 focus:ring-2 focus:ring-blue-300`}
+            type="text"
+            placeholder="From"
+            value={activeInput === "from" ? searchQuery : from?.name || ""}
+            onClick={() => {
+              setActiveInput("from");
+              setSearchQuery("");
+            }}
+            onChange={(e) => {
+              const value = e.target.value;
+              setSearchQuery(value);
+              if (activeInput === "from") setFrom({ name: value, coords: null });
+              else if (activeInput === "to") setTo({ name: value, coords: null });
+            }}
+          />
 
-        <input
-          className={`block w-52 px-3 py-2 rounded-md border transition-all duration-200
-            ${activeInput === "to" ? "border-blue-500 bg-blue-50" : "border-gray-300 bg-white"}
-            focus:border-blue-500 focus:ring-2 focus:ring-blue-300`}
-          type="text"
-          placeholder="To"
-          value={to?.name || ""}
-          onClick={() => setActiveInput("to")}
-          readOnly
-        />
+          {activeInput === "from" && (
+            <div className="absolute top-full left-0 bg-white border w-52 max-h-60 overflow-y-auto shadow-md rounded-md z-[1100]">
+              {filteredMarkers.map((marker, index) => (
+                <div
+                  key={index}
+                  className="px-3 py-2 hover:bg-blue-100 cursor-pointer"
+                  onClick={() => {
+                    setFrom({ name: marker.popUp, coords: marker.geocode });
+                    setSearchQuery(marker.popUp);
+                    setActiveInput(null);
+                  }}
+                >
+                  {marker.popUp}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="relative">
+          <input
+            className={`block w-52 px-3 py-2 rounded-md border transition-all duration-200
+              ${activeInput === "to" ? "border-blue-500 bg-blue-50" : "border-gray-300 bg-white"}
+              focus:border-blue-500 focus:ring-2 focus:ring-blue-300`}
+            type="text"
+            placeholder="To"
+            value={activeInput === "to" ? searchQuery : to?.name || ""}
+            onClick={() => {
+              setActiveInput("to");
+              setSearchQuery("");
+            }}
+            onChange={(e) => {
+              const value = e.target.value;
+              setSearchQuery(value);
+              if (activeInput === "from") setFrom({ name: value, coords: null });
+              else if (activeInput === "to") setTo({ name: value, coords: null });
+            }}
+          />
+
+          {activeInput === "to" && (
+            <div className="absolute top-full left-0 bg-white border w-52 max-h-60 overflow-y-auto shadow-md rounded-md z-[1100]">
+              {filteredMarkers.map((marker, index) => (
+                <div
+                  key={index}
+                  className="px-3 py-2 hover:bg-blue-100 cursor-pointer"
+                  onClick={() => {
+                    setTo({ name: marker.popUp, coords: marker.geocode });
+                    setSearchQuery(marker.popUp);
+                    setActiveInput(null);
+                  }}
+                >
+                  {marker.popUp}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
-      <div ref={inputContainerRef} className="m-4 border-2 border-black-500">
+      <div className="m-4 border-2 border-black-500">
         <MapContainer
           center={[14.6396,121.0786]}
           zoom={17}
@@ -188,6 +252,7 @@ function Home() {
                     } else if (activeInput === "to") {
                       setTo({ name: marker.popUp, coords: marker.geocode });
                     }
+                    setActiveInput(null);
                   },
                 }}
               >
@@ -195,7 +260,7 @@ function Home() {
               </Marker>
             ))}
 
-          {from && to && (
+          {from?.coords && to?.coords && (
             <Polyline
               positions={[from.coords, to.coords]}
               pathOptions={{ color: "red", weight: 4 }}
