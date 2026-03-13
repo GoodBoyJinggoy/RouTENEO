@@ -71,8 +71,13 @@ npm install
 ```bash
 npm run dev
 ```
+3. **Create a .env file**
 
-3. The frontend communicates with the backend via Django REST API.
+```
+VITE_API_URL="http://127.0.0.1:8000/"
+```
+
+4. The frontend communicates with the backend via Django REST API.
 
 ---
 
