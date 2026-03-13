@@ -61,8 +61,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'accounts',
     'corsheaders',
-    "rest_framework_gis",
-    "map",
+    'map',
 ]
 
 MIDDLEWARE = [

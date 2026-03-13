@@ -1,9 +1,7 @@
-from rest_framework_gis.serializers import GeoFeatureModelSerializer
+from rest_framework import serializers
 from .models import Building
 
-#https://pypi.org/project/djangorestframework-gis/
-
-class BuildingSerializer(GeoFeatureModelSerializer):
+class BuildingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Building
         fields = ["name", "latitude", "longitude"]
