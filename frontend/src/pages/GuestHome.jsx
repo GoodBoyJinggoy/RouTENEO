@@ -1,13 +1,11 @@
 import { MapContainer,TileLayer, Polygon, Marker, Popup, Polyline } from "react-leaflet"
 import "leaflet/dist/leaflet.css";
-import { Icon } from "leaflet";
+import { Icon, Routing } from "leaflet";
 import pinIcon from "../assets/img/location-pin.png";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom"
+import RoutineMachine from "./RoutineMachine";
 
-//source: https://github.com/Project-OSRM/osrm.js
-var OSRM = require('osrm.js');
-var osrm = new OSRM("https://router.project-osrm.org");
 
 function Home() {
 
@@ -264,10 +262,13 @@ function Home() {
             ))}
 
           {from?.coords && to?.coords && (
+            /*
             <Polyline
               positions={[from.coords, to.coords]}
               pathOptions={{ color: "red", weight: 4 }}
             />
+            */
+            <RoutineMachine coords={[from.coords, to.coords]}/>
           )}
         </MapContainer>
       </div>
