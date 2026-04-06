@@ -1,3 +1,5 @@
+// Largely based on
+// https://codesandbox.io/p/sandbox/rlv3-routing-machine-gzdt1?file=%2Fsrc%2FRoutineMachine.js%3A12%2C26-12%2C33 
 import L from "leaflet";
 import { createControlComponent } from "@react-leaflet/core";
 import "leaflet-routing-machine";
