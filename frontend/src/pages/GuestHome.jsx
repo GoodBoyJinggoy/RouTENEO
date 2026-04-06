@@ -5,6 +5,9 @@ import pinIcon from "../assets/img/location-pin.png";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom"
 
+//source: https://github.com/Project-OSRM/osrm.js
+var OSRM = require('osrm.js');
+var osrm = new OSRM("https://router.project-osrm.org");
 
 function Home() {
 
