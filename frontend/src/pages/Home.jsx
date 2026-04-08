@@ -269,14 +269,16 @@ function Home() {
         </MapContainer>
       </div>
 
+      <div className="w-full flex justify-end p-4">
       <button
         onClick={() => navigate("/logout")}
-        className="fixed top-4 right-4 bg-indigo-500 text-white py-2 px-4 rounded-xl font-semibold
-             hover:bg-indigo-600 active:scale-95 transition-all duration-200
-             disabled:opacity-50 disabled:cursor-not-allowed"
+        className="bg-indigo-500 text-white py-2 px-4 rounded-xl font-semibold
+                  hover:bg-indigo-600 active:scale-95 transition-all duration-200
+                  disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Logout
       </button>
+    </div>
     </div>
   )
 }
