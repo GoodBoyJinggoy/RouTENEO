@@ -1,5 +1,6 @@
 from rest_framework.routers import DefaultRouter
-from .views import BuildingViewSet
+from .views import BuildingViewSet, CommentView, CommentAddView
+from django.urls import path, include
 
 # https://av.tib.eu/media/45441
 # https://www.geeksforgeeks.org/python/viewsets-routers-django-rest-framework/
@@ -7,4 +8,9 @@ from .views import BuildingViewSet
 router = DefaultRouter()
 router.register(r'buildings', BuildingViewSet, basename='building')
 
-urlpatterns = router.urls
+urlpatterns = [
+    path('', include(router.urls)),
+
+    path('routes/<int:route_id>/comments/', CommentView.as_view(), name='comment'),
+    path('routes/<int:route_id>/comments/add/', CommentAddView.as_view(), name='comment_add'),
+]
