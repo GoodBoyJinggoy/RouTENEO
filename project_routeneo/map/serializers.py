@@ -4,7 +4,7 @@ from .models import Building, Route, Comment
 class BuildingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Building
-        fields = ["building_id", x"name", "latitude", "longitude"]
+        fields = ["building_id", "name", "latitude", "longitude"]
 
 class RouteSerializer(serializers.ModelSerializer):
     class Meta:
