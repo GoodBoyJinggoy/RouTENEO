@@ -61,7 +61,7 @@ function Form({ route, method }) {
 >
   <div className="w-full max-w-sm bg-white p-6 rounded-3xl shadow-md space-y-5">
 
-    {/* Top Right Help */}
+    {/* what is routeneo */}
     {method === "login" && (
       <div className="flex justify-end text-sm text-gray-500">
         <span className="underline cursor-pointer"><a href="https://docs.google.com/document/d/170zFxpLeFjIMibChLj2tn5Wr5hCdNL8efKuIMCGGG7g/edit?usp=sharing" target="_blank"> ⓘ What is RouTeneo? </a></span>
@@ -78,10 +78,9 @@ function Form({ route, method }) {
       </h1>
     </div>
 
-    {/* FORM */}
     <div className="space-y-4">
 
-      {/* Email */}
+      {/* email */}
       <div>
         <label className="text-sm font-medium text-gray-600">
           Ateneo email
@@ -96,7 +95,7 @@ function Form({ route, method }) {
         />
       </div>
 
-      {/* REGISTER ONLY */}
+      {/* register */}
       {method === "register" && (
         <>
           <div>
@@ -162,7 +161,7 @@ function Form({ route, method }) {
       )}
     </div>
 
-    {/* PRIMARY BUTTON */}
+    {/* submit */}
     <button
       type="submit"
       className="w-full bg-indigo-500 text-white py-3 rounded-xl font-semibold
@@ -171,7 +170,7 @@ function Form({ route, method }) {
       {loading ? "Loading..." : name}
     </button>
 
-    {/* SECONDARY ACTIONS */}
+    {/* go to register*/}
     {method === "login" && (
       <button
         type="button"
@@ -183,7 +182,7 @@ function Form({ route, method }) {
       </button>
     )}
 
-    {/* TERTIARY */}
+    {/* guest mode */}
     <button
       type="button"
       onClick={() => navigate("/guest")}
