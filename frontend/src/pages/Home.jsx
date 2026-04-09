@@ -6,40 +6,223 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom"
 import Carousel from "../components/Carousel";
 
+import gate1_1 from "../assets/pictures/gate1/1.png";
+import gate1_2 from "../assets/pictures/gate1/2.png";
+import gate1_3 from "../assets/pictures/gate1/3.png";
+
+// import gate2_1
+// import gate2_2
+// import gate2_3
+
+// import gate3.5_1
+// import gate3.5_2
+// import gate3.5_3
+
+// import ags_1
+// import ags_2
+// import ags_3
+
+// import beg_1
+// import beg_2
+// import beg_3
+
+// import arete_1
+// import arete_2
+// import arete_3
+
+// import covcourt_1
+// import covcourt_2
+// import covcourt_3
+
+// import bel_1
+// import bel_2
+// import bel_3
 
 function Home() {
 
   const markers = [
-  { geocode:[14.634666,121.074539], popUp:"Gate 1", note: "Campus Access Point", description: "Campus access point located near the Ateneo Grade School. Enter here for access to Line A E-Jeep services." , images: ['https://t4.ftcdn.net/jpg/08/90/90/15/360_F_890901536_4HKVpv6I9ygu3Emm5MskpSPjkx9YUCKe.jpg', 'https://thumbs.dreamstime.com/b/golden-pearly-gates-heaven-open-right-side-white-clouds-blue-sky-background-stairs-leading-up-to-gat-illustration-366704189.jpg'] },
-  { geocode:[14.635807,121.074598], popUp:"Gate 2" },
-  { geocode:[14.64053,121.074687], popUp:"Gate 3.5" },
-  { geocode:[14.634463,121.076798], popUp:"Ateneo Grade School" },
-  { geocode:[14.63491,121.075553], popUp:"Blue Eagle Gym" },
-  { geocode:[14.641337,121.075958], popUp:"Arete Museum" },
-  { geocode:[14.636929,121.078565], popUp:"Covered Courts" },
-  { geocode:[14.641579,121.079373], popUp:"Bellarmine Hall" },
-  { geocode:[14.636139,121.077589], popUp:"Manila Observatory" },
-  { geocode:[14.640843,121.076296], popUp:"Leong Hall" },
-  { geocode:[14.640116,121.078463], popUp:"Xavier Hall" },
-  { geocode:[14.640191,121.078045], popUp:"Faber Hall" },
-  { geocode:[14.640261,121.077291], popUp:"Old Rizal Library" },
-  { geocode:[14.640619,121.076691], popUp:"Social Sciences Building" },
-  { geocode:[14.639757,121.078088], popUp:"Kostka Hall" },
-  { geocode:[14.639734,121.077704], popUp:"MVP Center" },
-  { geocode:[14.640009,121.076961], popUp:"Dela Costa Hall" },
-  { geocode:[14.640001,121.076243], popUp:"New Rizal Library" },
-  { geocode:[14.63948,121.078303], popUp:"Berchmans Hall" },
-  { geocode:[14.639506,121.077004], popUp:"Faura Hall" },
-  { geocode:[14.639145,121.077578], popUp:"Schmitt Hall" },
-  { geocode:[14.638963,121.078008], popUp:"Gonzaga Hall" },
-  { geocode:[14.638808,121.076784], popUp:"PIPAC" },
-  { geocode:[14.638507,121.077576], popUp:"SEC A" },
-  { geocode:[14.638172,121.077197], popUp:"SEC B" },
-  { geocode:[14.638283,121.076953], popUp:"SEC C" },
-  { geocode:[14.638382,121.076733], popUp:"PLDT-CTC" },
-  { geocode:[14.638452,121.076422], popUp:"JGSOM" },
-  { geocode:[14.637892,121.076503], popUp:"JSEC" },
-  { geocode:[14.637596,121.076988], popUp:"Matteo Ricci Hall" }
+  { geocode:[14.634666,121.074539], popUp:"Gate 1", 
+    note: "Campus Access Point - pedestrian access", 
+    description: "Campus access point located near the Ateneo Grade School. Enter here for access to Line A E-Jeep services, the Ateneo Grade School, and the Blue Eagle Gym." , 
+    images: 
+    [ gate1_1,
+      gate1_2,
+      gate1_3 ] 
+  },
+  { geocode:[14.635807,121.074598], popUp:"Gate 2",
+    note: "Campus Access Point - vehicular access for vehicles with gate pass only",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.64053,121.074687], popUp:"Gate 3.5",
+    note: "",
+    description: "",
+    images:
+    ['']
+   },
+  { geocode:[14.634463,121.076798], popUp:"Ateneo Grade School",
+    note: "",
+    description: "",
+    images:
+    ['']
+   },
+  { geocode:[14.63491,121.075553], popUp:"Blue Eagle Gym" ,
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.641337,121.075958], popUp:"Arete Museum",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.636929,121.078565], popUp:"Covered Courts",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.641579,121.079373], popUp:"Bellarmine Hall",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.636139,121.077589], popUp:"Manila Observatory",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.640843,121.076296], popUp:"Leong Hall",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.640116,121.078463], popUp:"Xavier Hall",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.640191,121.078045], popUp:"Faber Hall",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.640261,121.077291], popUp:"Old Rizal Library",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.640619,121.076691], popUp:"Social Sciences Building",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.639757,121.078088], popUp:"Kostka Hall",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.639734,121.077704], popUp:"MVP Center",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.640009,121.076961], popUp:"Dela Costa Hall",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.640001,121.076243], popUp:"New Rizal Library",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.63948,121.078303], popUp:"Berchmans Hall",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.639506,121.077004], popUp:"Faura Hall",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.639145,121.077578], popUp:"Schmitt Hall",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.638963,121.078008], popUp:"Gonzaga Hall",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.638808,121.076784], popUp:"PIPAC",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.638507,121.077576], popUp:"SEC A",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.638172,121.077197], popUp:"SEC B",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.638283,121.076953], popUp:"SEC C",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.638382,121.076733], popUp:"PLDT-CTC",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.638452,121.076422], popUp:"JGSOM",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.637892,121.076503], popUp:"JSEC",
+    note: "",
+    description: "",
+    images:
+    ['']
+  },
+  { geocode:[14.637596,121.076988], popUp:"Matteo Ricci Hall",
+    note: "",
+    description: "",
+    images:
+    ['']
+  }
 ];
 
   const navigate = useNavigate()
@@ -270,7 +453,7 @@ function Home() {
                   <strong>{marker.popUp}</strong>
                   </div>
                   <div style={{ backgroundColor: "#1a237e", display: "inline-block", color: "#FFFFFF", fontSize: "8px", marginRight: "4px" }}>
-                  <strong>{marker.note}</strong>
+                  <b>{"⠀" + marker.note + "⠀"}</b>
                   </div>
                   <div>
                   <p>{marker.description}</p>
