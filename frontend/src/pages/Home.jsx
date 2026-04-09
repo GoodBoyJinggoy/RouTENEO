@@ -4,6 +4,7 @@ import { Icon } from "leaflet";
 import pinIcon from "../assets/img/location-pin.png";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom"
+import api from "../api"
 
 
 function Home() {
@@ -42,12 +43,29 @@ function Home() {
 ];
 
   const navigate = useNavigate()
+  const [user, setUser] = useState(null)
   const [from, setFrom] = useState(null);
   const [to, setTo] = useState(null);
   const [activeInput, setActiveInput] = useState(null);
   const inputContainerRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredMarkers, setFilteredMarkers] = useState(markers);
+  const [showProfile, setShowProfile] = useState(false)
+
+  {/* get profile */}
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const res = await api.get("/accounts/profile/")
+        setUser(res.data)
+        console.log(res.data)
+      } catch (err) {
+        console.error("Failed to fetch profile:", err)
+      }
+    }
+
+    fetchProfile()
+  }, [])
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -106,7 +124,6 @@ function Home() {
     [14.642176, 121.076099],
     [14.642330, 121.075651],
     
-    
   ];
 
   const worldMask = [
@@ -130,11 +147,25 @@ function Home() {
   });
 
   return (
-    <div>
-      <div className="m-4 flex flex-col gap-2 relative w-52">
+    <div className="h-screen w-full flex flex-col">
+      <div className="fixed top-0 left-0 w-full bg-blue-800 shadow-md z-[1500] px-4 py-3 flex items-start justify-between">
+
+      {/* LEFT: From + To */}
+      <div className="flex flex-col gap-1">
+        <h1
+          className="absolute inset-0 flex items-center justify-center text-white opacity-80 pointer-events-none select-none"
+          style={{
+            fontFamily: "'Faster One', cursive",
+            fontSize: "3rem", // adjust size here
+          }}
+        >
+          RouTENEO
+        </h1>
+
+        {/* FROM */}
         <div className="relative">
           <input
-            className={`block w-52 px-3 py-2 rounded-md border transition-all duration-200
+            className={`block w-60 max-w-[70vw] px-3 py-2 rounded-md border transition-all duration-200
               ${activeInput === "from" ? "border-blue-500 bg-blue-50" : "border-gray-300 bg-white"}
               focus:border-blue-500 focus:ring-2 focus:ring-blue-300`}
             type="text"
@@ -147,13 +178,12 @@ function Home() {
             onChange={(e) => {
               const value = e.target.value;
               setSearchQuery(value);
-              if (activeInput === "from") setFrom({ name: value, coords: null });
-              else if (activeInput === "to") setTo({ name: value, coords: null });
+              setFrom({ name: value, coords: null });
             }}
           />
 
           {activeInput === "from" && (
-            <div className="absolute top-full left-0 bg-white border w-52 max-h-60 overflow-y-auto shadow-md rounded-md z-[1100]">
+            <div className="absolute top-full left-0 bg-white border w-full max-h-60 overflow-y-auto shadow-md rounded-md z-[2000]">
               {filteredMarkers.map((marker, index) => (
                 <div
                   key={index}
@@ -171,9 +201,10 @@ function Home() {
           )}
         </div>
 
+        {/* TO */}
         <div className="relative">
           <input
-            className={`block w-52 px-3 py-2 rounded-md border transition-all duration-200
+            className={`block w-60 max-w-[70vw] px-3 py-2 rounded-md border transition-all duration-200
               ${activeInput === "to" ? "border-blue-500 bg-blue-50" : "border-gray-300 bg-white"}
               focus:border-blue-500 focus:ring-2 focus:ring-blue-300`}
             type="text"
@@ -186,13 +217,12 @@ function Home() {
             onChange={(e) => {
               const value = e.target.value;
               setSearchQuery(value);
-              if (activeInput === "from") setFrom({ name: value, coords: null });
-              else if (activeInput === "to") setTo({ name: value, coords: null });
+              setTo({ name: value, coords: null });
             }}
           />
 
           {activeInput === "to" && (
-            <div className="absolute top-full left-0 bg-white border w-52 max-h-60 overflow-y-auto shadow-md rounded-md z-[1100]">
+            <div className="absolute top-full left-0 bg-white border w-full max-h-60 overflow-y-auto shadow-md rounded-md z-[2000]">
               {filteredMarkers.map((marker, index) => (
                 <div
                   key={index}
@@ -209,18 +239,95 @@ function Home() {
             </div>
           )}
         </div>
+
       </div>
 
-      <div className="m-4 border-2 border-black-500">
-        <MapContainer
-          center={[14.6396,121.0786]}
-          zoom={17}
-          minZoom={16}
-          maxZoom={18}
-          maxBounds={ateneoBounds}
-          maxBoundsViscosity={1.0}
-          style={{ height: "600px", width: "100%" }}
-        >
+      {/* RIGHT: Profile */}
+      <div
+        className="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center cursor-pointer overflow-hidden ml-3 shrink-0"
+        onClick={() => setShowProfile(true)}
+      >
+        {user?.profile_picture ? (
+          <img
+            src={baseURL + user.profile_picture}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <span className="text-white font-bold">
+            {user?.first_name?.[0] || "U"}
+          </span>
+        )}
+      </div>
+      </div>
+
+      <div
+        className={`fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-0 transform transition-transform duration-300 z-[2000]
+        ${showProfile ? "translate-x-0" : "translate-x-full"}`}
+      >
+        <div className="p-5 space-y-4">
+
+          <button onClick={() => setShowProfile(false)}>✕</button>
+
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-20 h-20 rounded-full bg-gray-300 overflow-hidden">
+              {user?.profile_picture && (
+                <img
+                  src={
+                    user?.profile_picture
+                      ? baseURL + user.profile_picture
+                      : "https://ui-avatars.com/api/?name=" +
+                        (user?.first_name || "User")
+                  }
+                  className="w-full h-full object-cover"
+                />
+              )}
+            </div>
+
+            <h2 className="text-lg font-semibold">
+              {user?.first_name} {user?.last_name}
+            </h2>
+
+            <p className="text-sm text-gray-500">{user?.email}</p>
+          </div>
+
+          <div className="space-y-2">
+            <button className="w-full bg-gray-100 p-2 rounded-lg">
+              Change Profile Picture
+            </button>
+
+            <button className="w-full bg-gray-100 p-2 rounded-lg">
+              Change Password
+            </button>
+
+            <button className="w-full bg-gray-100 p-2 rounded-lg">
+              Edit Display Name
+            </button>
+
+            <button
+              onClick={() => navigate("/logout")}
+              className="w-full bg-red-500 text-white p-2 rounded-lg"
+            >
+              Logout
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <div className="mt-32 mx-4 mb-4">
+        <div className="rounded-xl overflow-hidden shadow-md border">
+          <MapContainer
+            center={[14.6396,121.0786]}
+            zoom={17}
+            minZoom={16}
+            maxZoom={18}
+            maxBounds={ateneoBounds}
+            maxBoundsViscosity={1.0}
+            style={{
+              height: "calc(100vh - 180px)", // KEY CHANGE
+              width: "100%",
+            }}
+          >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -267,18 +374,8 @@ function Home() {
             />
           )}
         </MapContainer>
+        </div>
       </div>
-
-      <div className="w-full flex justify-end p-4">
-      <button
-        onClick={() => navigate("/logout")}
-        className="bg-indigo-500 text-white py-2 px-4 rounded-xl font-semibold
-                  hover:bg-indigo-600 active:scale-95 transition-all duration-200
-                  disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        Logout
-      </button>
-    </div>
     </div>
   )
 }
