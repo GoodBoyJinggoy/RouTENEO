@@ -4,12 +4,13 @@ import { Icon } from "leaflet";
 import pinIcon from "../assets/img/location-pin.png";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom"
+import Carousel from "../components/Carousel";
 
 
 function Home() {
 
   const markers = [
-  { geocode:[14.634666,121.074539], popUp:"Gate 1" },
+  { geocode:[14.634666,121.074539], popUp:"Gate 1", note: "Campus Access Point", description: "Campus access point located near the Ateneo Grade School. Enter here for access to Line A E-Jeep services." , images: ['https://t4.ftcdn.net/jpg/08/90/90/15/360_F_890901536_4HKVpv6I9ygu3Emm5MskpSPjkx9YUCKe.jpg', 'https://thumbs.dreamstime.com/b/golden-pearly-gates-heaven-open-right-side-white-clouds-blue-sky-background-stairs-leading-up-to-gat-illustration-366704189.jpg'] },
   { geocode:[14.635807,121.074598], popUp:"Gate 2" },
   { geocode:[14.64053,121.074687], popUp:"Gate 3.5" },
   { geocode:[14.634463,121.076798], popUp:"Ateneo Grade School" },
@@ -256,7 +257,25 @@ function Home() {
                   },
                 }}
               >
-                <Popup>{marker.popUp}</Popup>
+                <Popup>
+                  {marker.images && marker.images.length > 0 ? (
+                  <Carousel>
+                  {marker.images.map((image, i) => (
+                  <img src={image} alt="Slide" key={i} />
+                  ))}
+                  </Carousel>
+                  ) : null}
+                  
+                  <div style={{ fontSize: "20px"}}>
+                  <strong>{marker.popUp}</strong>
+                  </div>
+                  <div style={{ backgroundColor: "#1a237e", display: "inline-block", color: "#FFFFFF", fontSize: "8px", marginRight: "4px" }}>
+                  <strong>{marker.note}</strong>
+                  </div>
+                  <div>
+                  <p>{marker.description}</p>
+                  </div>
+                </Popup>
               </Marker>
             ))}
 
