@@ -51,6 +51,7 @@ function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredMarkers, setFilteredMarkers] = useState(markers);
   const [showProfile, setShowProfile] = useState(false)
+  const [newDisplayName, setNewDisplayName] = useState("")
 
   {/* get profile */}
   useEffect(() => {
@@ -156,7 +157,7 @@ function Home() {
           className="absolute inset-0 flex items-center justify-center text-white opacity-80 pointer-events-none select-none"
           style={{
             fontFamily: "'Faster One', cursive",
-            fontSize: "3rem", // adjust size here
+            fontSize: "3rem", 
           }}
         >
           RouTENEO
@@ -291,21 +292,21 @@ function Home() {
           </div>
 
           <div className="space-y-2">
-            <button className="w-full bg-gray-100 p-2 rounded-lg">
+            <button className="w-full bg-gray-100 p-2 rounded-lg hover:bg-gray-200">
               Change Profile Picture
             </button>
 
-            <button className="w-full bg-gray-100 p-2 rounded-lg">
+            <button className="w-full bg-gray-100 p-2 rounded-lg hover:bg-gray-200">
               Change Password
             </button>
 
-            <button className="w-full bg-gray-100 p-2 rounded-lg">
+            <button className="w-full bg-gray-100 p-2 rounded-lg hover:bg-gray-200">
               Edit Display Name
             </button>
 
             <button
               onClick={() => navigate("/logout")}
-              className="w-full bg-red-500 text-white p-2 rounded-lg"
+              className="w-full bg-red-500 text-white p-2 rounded-lg hover:bg-red-600"
             >
               Logout
             </button>
