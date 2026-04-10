@@ -1,10 +1,10 @@
 import { MapContainer,TileLayer, Polygon, Marker, Popup, Polyline } from "react-leaflet"
 import "leaflet/dist/leaflet.css";
-import { Icon, Routing } from "leaflet";
+import { Icon } from "leaflet";
 import pinIcon from "../assets/img/location-pin.png";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom"
-import RoutineMachine from "./RoutineMachine";
+import RoutingMachine from "./RoutingMachine";
 
 
 function Home() {
@@ -262,7 +262,7 @@ function Home() {
             ))}
 
           {from?.coords && to?.coords && (
-            <RoutineMachine coords={[from.coords, to.coords]}/>
+            <RoutingMachine coords={[from.coords, to.coords]}/>
           )}
         </MapContainer>
       </div>
