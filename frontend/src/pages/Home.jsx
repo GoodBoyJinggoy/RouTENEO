@@ -3,7 +3,7 @@ import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
 import pinIcon from "../assets/img/location-pin.png";
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import api from "../api"
 
 
@@ -51,7 +51,50 @@ function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredMarkers, setFilteredMarkers] = useState(markers);
   const [showProfile, setShowProfile] = useState(false)
-  const [newDisplayName, setNewDisplayName] = useState("")
+  const [showChangePassword, setShowChangePassword] = useState(false)
+  const [oldPassword, setOldPassword] = useState("")
+  const [newPassword, setNewPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [notif, setNotif] = useState(null)
+  const location = useLocation()
+  useEffect(() => {
+    if (location.state?.message) {
+      showNotif(location.state.message, "success")
+    }
+  }, [location.state])
+
+  const showNotif = (message, type = "success") => {
+    setNotif({ message, type })
+    setTimeout(() => {
+      setNotif(null)
+    }, 3000)
+  }
+
+  const handleChangePassword = async () => {
+  if (newPassword !== confirmPassword) {
+    showNotif("Passwords do not match", "error")
+    return
+  }
+
+  try {
+    const res = await api.post("/accounts/change-password/", {
+      old_password: oldPassword,
+      new_password: newPassword,
+    })
+
+    showNotif("Password changed", "success")
+
+    // reset fields
+    setOldPassword("")
+    setNewPassword("")
+    setConfirmPassword("")
+    setShowChangePassword(false)
+
+  } catch (err) {
+    console.error(err)
+    showNotif("Error occurred while changine password", "error")
+  }
+}
 
   {/* get profile */}
   useEffect(() => {
@@ -149,6 +192,18 @@ function Home() {
 
   return (
     <div className="h-screen w-full flex flex-col">
+
+      {notif && (
+        <div className="fixed top-5 right-5 z-[3000]">
+          <div
+            className={`px-5 py-3 rounded-xl shadow-lg text-white font-medium
+            ${notif.type === "success" ? "bg-green-500" : "bg-red-500"}`}
+          >
+            {notif.message}
+          </div>
+        </div>
+      )}
+
       <div className="fixed top-0 left-0 w-full bg-blue-800 shadow-md z-[1500] px-4 py-3 flex items-start justify-between">
 
       {/* LEFT: From + To */}
@@ -296,9 +351,47 @@ function Home() {
               Change Profile Picture
             </button>
 
-            <button className="w-full bg-gray-100 p-2 rounded-lg hover:bg-gray-200">
+            <button
+              onClick={() => setShowChangePassword(prev => !prev)}
+              className="w-full bg-gray-100 p-2 rounded-lg hover:bg-gray-200"
+            >
               Change Password
             </button>
+
+            {showChangePassword && (
+              <div className="space-y-2">
+                <input
+                  type="password"
+                  placeholder="Old Password"
+                  className="w-full p-2 border rounded"
+                  value={oldPassword}
+                  onChange={(e) => setOldPassword(e.target.value)}
+                />
+
+                <input
+                  type="password"
+                  placeholder="New Password"
+                  className="w-full p-2 border rounded"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+
+                <input
+                  type="password"
+                  placeholder="Confirm Password"
+                  className="w-full p-2 border rounded"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+
+                <button
+                  onClick={handleChangePassword}
+                  className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+                >
+                  Submit
+                </button>
+              </div>
+            )}
 
             <button className="w-full bg-gray-100 p-2 rounded-lg hover:bg-gray-200">
               Edit Display Name
