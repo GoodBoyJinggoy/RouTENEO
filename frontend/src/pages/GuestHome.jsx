@@ -408,10 +408,24 @@ function Home() {
 
   return (
     <div>
-      <div className="m-4 flex flex-col gap-2 relative w-52">
+      <div className="fixed top-0 left-0 w-full bg-blue-800 shadow-md z-[1500] px-4 py-3 flex items-start justify-between">
+
+      {/* LEFT: From + To */}
+      <div className="flex flex-col gap-1">
+        <h1
+          className="absolute inset-0 flex items-center justify-center text-white opacity-80 pointer-events-none select-none"
+          style={{
+            fontFamily: "'Faster One', cursive",
+            fontSize: "3rem", 
+          }}
+        >
+          RouTENEO
+        </h1>
+
+        {/* FROM */}
         <div className="relative">
           <input
-            className={`block w-52 px-3 py-2 rounded-md border transition-all duration-200
+            className={`block w-60 max-w-[70vw] px-3 py-2 rounded-md border transition-all duration-200
               ${activeInput === "from" ? "border-blue-500 bg-blue-50" : "border-gray-300 bg-white"}
               focus:border-blue-500 focus:ring-2 focus:ring-blue-300`}
             type="text"
@@ -424,13 +438,12 @@ function Home() {
             onChange={(e) => {
               const value = e.target.value;
               setSearchQuery(value);
-              if (activeInput === "from") setFrom({ name: value, coords: null });
-              else if (activeInput === "to") setTo({ name: value, coords: null });
+              setFrom({ name: value, coords: null });
             }}
           />
 
           {activeInput === "from" && (
-            <div className="absolute top-full left-0 bg-white border w-52 max-h-60 overflow-y-auto shadow-md rounded-md z-[1100]">
+            <div className="absolute top-full left-0 bg-white border w-full max-h-60 overflow-y-auto shadow-md rounded-md z-[2000]">
               {filteredMarkers.map((marker, index) => (
                 <div
                   key={index}
@@ -448,9 +461,10 @@ function Home() {
           )}
         </div>
 
+        {/* TO */}
         <div className="relative">
           <input
-            className={`block w-52 px-3 py-2 rounded-md border transition-all duration-200
+            className={`block w-60 max-w-[70vw] px-3 py-2 rounded-md border transition-all duration-200
               ${activeInput === "to" ? "border-blue-500 bg-blue-50" : "border-gray-300 bg-white"}
               focus:border-blue-500 focus:ring-2 focus:ring-blue-300`}
             type="text"
@@ -463,13 +477,12 @@ function Home() {
             onChange={(e) => {
               const value = e.target.value;
               setSearchQuery(value);
-              if (activeInput === "from") setFrom({ name: value, coords: null });
-              else if (activeInput === "to") setTo({ name: value, coords: null });
+              setTo({ name: value, coords: null });
             }}
           />
 
           {activeInput === "to" && (
-            <div className="absolute top-full left-0 bg-white border w-52 max-h-60 overflow-y-auto shadow-md rounded-md z-[1100]">
+            <div className="absolute top-full left-0 bg-white border w-full max-h-60 overflow-y-auto shadow-md rounded-md z-[2000]">
               {filteredMarkers.map((marker, index) => (
                 <div
                   key={index}
@@ -486,18 +499,33 @@ function Home() {
             </div>
           )}
         </div>
+
       </div>
 
-      <div className="m-4 border-2 border-black-500">
-        <MapContainer
-          center={[14.6396,121.0786]}
-          zoom={17}
-          minZoom={16}
-          maxZoom={18}
-          maxBounds={ateneoBounds}
-          maxBoundsViscosity={1.0}
-          style={{ height: "600px", width: "100%" }}
-        >
+      <button
+        onClick={() => navigate("/login")}
+        className="fixed top-4 right-4 bg-indigo-500 text-white py-2 px-4 rounded-xl font-semibold
+             hover:bg-indigo-600 active:scale-95 transition-all duration-200
+             disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Login
+      </button>
+      </div>
+
+      <div className="mt-32 mx-4 mb-4">
+        <div className="rounded-xl overflow-hidden shadow-md border">
+          <MapContainer
+            center={[14.6396,121.0786]}
+            zoom={17}
+            minZoom={16}
+            maxZoom={18}
+            maxBounds={ateneoBounds}
+            maxBoundsViscosity={1.0}
+            style={{
+              height: "calc(100vh - 180px)", // KEY CHANGE
+              width: "100%",
+            }}
+          >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -559,16 +587,8 @@ function Home() {
             <RoutingMachine coords={[from.coords, to.coords]}/>
           )}
         </MapContainer>
+        </div>
       </div>
-
-      <button
-        onClick={() => navigate("/login")}
-        className="fixed top-4 right-4 bg-indigo-500 text-white py-2 px-4 rounded-xl font-semibold
-             hover:bg-indigo-600 active:scale-95 transition-all duration-200
-             disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        Login
-      </button>
     </div>
   )
 }
