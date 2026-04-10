@@ -57,11 +57,29 @@ function Home() {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [notif, setNotif] = useState(null)
   const location = useLocation()
+  const [showEditName, setShowEditName] = useState(false)
+  const [displayName, setDisplayName] = useState("")
   useEffect(() => {
     if (location.state?.message) {
       showNotif(location.state.message, "success")
     }
   }, [location.state])
+
+    const handleChangeDisplayName = async () => {
+    try {
+      const res = await api.patch("/accounts/profile/", {
+        display_name: displayName,
+      })
+
+      setUser(res.data) // update UI
+      showNotif("Display name updated", "success")
+      setShowEditName(false)
+
+    } catch (err) {
+      console.error(err)
+      showNotif("Failed to update display name", "error")
+    }
+  }
 
   const showNotif = (message, type = "success") => {
     setNotif({ message, type })
@@ -340,7 +358,7 @@ function Home() {
             </div>
 
             <h2 className="text-lg font-semibold">
-              {user?.first_name} {user?.last_name}
+              {user?.display_name || `${user?.first_name} ${user?.last_name}`}
             </h2>
 
             <p className="text-sm text-gray-500">{user?.email}</p>
@@ -393,9 +411,34 @@ function Home() {
               </div>
             )}
 
-            <button className="w-full bg-gray-100 p-2 rounded-lg hover:bg-gray-200">
+            <button
+              onClick={() => {
+                setShowEditName(prev => !prev)
+                setDisplayName(user?.display_name || "")
+              }}
+              className="w-full bg-gray-100 p-2 rounded-lg hover:bg-gray-200"
+            >
               Edit Display Name
             </button>
+
+            {showEditName && (
+              <div className="space-y-2">
+                <input
+                  type="text"
+                  placeholder="New Display Name"
+                  className="w-full p-2 border rounded"
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
+                />
+
+                <button
+                  onClick={handleChangeDisplayName}
+                  className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+                >
+                  Save
+                </button>
+              </div>
+            )}
 
             <button
               onClick={() => navigate("/logout")}
