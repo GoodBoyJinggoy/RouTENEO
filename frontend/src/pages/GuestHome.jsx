@@ -262,12 +262,6 @@ function Home() {
             ))}
 
           {from?.coords && to?.coords && (
-            /*
-            <Polyline
-              positions={[from.coords, to.coords]}
-              pathOptions={{ color: "red", weight: 4 }}
-            />
-            */
             <RoutineMachine coords={[from.coords, to.coords]}/>
           )}
         </MapContainer>
