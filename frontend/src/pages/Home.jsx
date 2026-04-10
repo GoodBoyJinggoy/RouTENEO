@@ -125,6 +125,7 @@ import faura_2 from "../assets/pictures/faura/faura_2.jpg";
 // import macci_1 from "../assets/pictures/macci/macci_1.png";
 // import macci_2 from "../assets/pictures/macci/macci_2.png";
 // import macci_3 from "../assets/pictures/macci/macci_3.png";
+import RoutingMachine from "./RoutingMachine";
 
 function Home() {
 
@@ -559,10 +560,7 @@ function Home() {
             ))}
 
           {from?.coords && to?.coords && (
-            <Polyline
-              positions={[from.coords, to.coords]}
-              pathOptions={{ color: "red", weight: 4 }}
-            />
+            <RoutingMachine coords={[from.coords, to.coords]}/>
           )}
         </MapContainer>
       </div>
@@ -576,6 +574,26 @@ function Home() {
       >
         Logout
       </button>
+      
+      <div>  
+          <button
+            onClick={() => navigate("/account")}
+            className="fixed top-4 right-4 bg-indigo-500 text-white py-2 px-4 rounded-xl font-semibold
+                hover:bg-indigo-600 active:scale-95 transition-all duration-200
+                disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Account
+          </button>
+          <button
+            onClick={() => navigate("/logout")}
+            className="fixed top-4 right-30 bg-indigo-500 text-white py-2 px-4 rounded-xl font-semibold
+                hover:bg-indigo-600 active:scale-95 transition-all duration-200
+                disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Logout
+          </button>
+      </div>
+      
     </div>
     </div>
   )
