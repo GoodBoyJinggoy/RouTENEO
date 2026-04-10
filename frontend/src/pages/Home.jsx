@@ -59,6 +59,33 @@ function Home() {
   const location = useLocation()
   const [showEditName, setShowEditName] = useState(false)
   const [displayName, setDisplayName] = useState("")
+  const [showUpload, setShowUpload] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const [profileFile, setProfileFile] = useState(null);
+
+  const handleUploadPfp = async () => {
+  if (!profileFile) return;
+
+  const formData = new FormData();
+    formData.append("profile_picture", profileFile);
+
+    try {
+      const res = await api.patch("/accounts/profile/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      setUser(res.data);
+      showNotif("Profile picture updated", "success");
+      setShowUpload(false);
+      setProfileFile(null);
+    } catch (err) {
+      console.error(err.response?.data || err);
+      showNotif("Upload failed", "error");
+    }
+  };
   useEffect(() => {
     if (location.state?.message) {
       showNotif(location.state.message, "success")
@@ -323,7 +350,7 @@ function Home() {
       >
         {user?.profile_picture ? (
           <img
-            src={baseURL + user.profile_picture}
+            src={user.profile_picture}
             className="w-full h-full object-cover"
           />
         ) : (
@@ -343,17 +370,16 @@ function Home() {
           <button onClick={() => setShowProfile(false)}>✕</button>
 
           <div className="flex flex-col items-center gap-3">
-            <div className="w-20 h-20 rounded-full bg-gray-300 overflow-hidden">
-              {user?.profile_picture && (
+            <div className="w-20 h-20 rounded-full bg-gray-300 overflow-hidden flex items-center justify-center">
+                    {user?.profile_picture ? (
                 <img
-                  src={
-                    user?.profile_picture
-                      ? baseURL + user.profile_picture
-                      : "https://ui-avatars.com/api/?name=" +
-                        (user?.first_name || "User")
-                  }
+                  src={user.profile_picture}
                   className="w-full h-full object-cover"
                 />
+              ) : (
+                <span className="text-white font-bold text-[120%]">
+                  {user?.first_name?.[0] || "U"}
+                </span>
               )}
             </div>
 
@@ -365,9 +391,54 @@ function Home() {
           </div>
 
           <div className="space-y-2">
-            <button className="w-full bg-gray-100 p-2 rounded-lg hover:bg-gray-200">
-              Change Profile Picture
-            </button>
+
+            {!showUpload ? (
+                <button
+                  onClick={() => setShowUpload(true)}
+                  className="w-full bg-gray-100 p-2 rounded-lg hover:bg-gray-200"
+                >
+                  Upload Profile Picture
+                </button>
+              ) : (
+                <div className="space-y-2">
+                  <button
+                    onClick={() => {
+                      setShowUpload(false);
+                      setProfileFile(null);
+                    }}
+                    className="w-full bg-gray-100 p-2 rounded hover:bg-gray-200"
+                  >
+                    Upload Profile Picture
+                  </button>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setProfileFile(e.target.files[0])}
+                    className="hidden"
+                  />
+
+                  <button
+                    onClick={() => fileInputRef.current.click()}
+                    className="w-full bg-yellow-100 p-2 rounded-lg hover:bg-yellow-200"
+                  >
+                    Choose Image
+                  </button>
+
+                  {profileFile && (
+                    <p className="text-sm text-gray-500">
+                      Selected: {profileFile.name}
+                    </p>
+                  )}
+
+                  <button
+                    onClick={handleUploadPfp}
+                    className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+                  >
+                    Confirm
+                  </button>
+                </div>
+            )}
 
             <button
               onClick={() => setShowChangePassword(prev => !prev)}

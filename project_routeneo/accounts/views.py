@@ -7,6 +7,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
+
 
 class ChangePasswordView(APIView):
     permission_classes = [IsAuthenticated]
@@ -35,6 +37,7 @@ class CreateUserView(generics.CreateAPIView):
 class ProfileView(generics.RetrieveUpdateAPIView):
     serializer_class = ProfileSerializer
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def get_object(self):
         profile, created = Profile.objects.get_or_create(user=self.request.user)
