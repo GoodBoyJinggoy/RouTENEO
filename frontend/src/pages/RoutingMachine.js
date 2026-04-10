@@ -18,12 +18,18 @@ const RoutingMachine = ({coords}) => {
             lineOptions: {
                 styles: [{ color: "#6FA1EC", weight: 4 }]
             },
+            router: L.Routing.osrmv1({
+                serviceUrl: 'https://routing.openstreetmap.de/routed-foot/route/v1',
+                profile: 'foot',
+                urlParameters: {
+                    weighting: 'shortest'
+                }
+            }),
             show: false,
             addWaypoints: false,
             routeWhileDragging: true,
             draggableWaypoints: false,
             fitSelectedRoutes: true,
-            showAlternatives: false
         }).addTo(map);
 
         routingControlRef.current = instance;
