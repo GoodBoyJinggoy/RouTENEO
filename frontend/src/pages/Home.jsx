@@ -418,7 +418,7 @@ function Home() {
 
   } catch (err) {
     console.error(err)
-    showNotif("Error occurred while changine password", "error")
+    showNotif("Error occurred while changing password", "error")
   }
 }
 
