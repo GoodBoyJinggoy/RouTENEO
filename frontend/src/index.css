@@ -1,2 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Faster+One&display=swap');
 @import "tailwindcss";
 
+.leaflet-container{
+    height:100vh
+}
