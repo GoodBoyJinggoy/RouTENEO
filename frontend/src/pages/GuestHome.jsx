@@ -315,6 +315,13 @@ function Home() {
       description: "Currently under renovation work, this housed Rizal Library computer rooms, and featured an open-air seating area on the 2nd floor.",
       images:
       ['']
+    },
+    {
+      geocode:[14.6398509, 121.0796305], popUp:"Church of the Gesu",
+      note: "LS Complex",
+      description: "🙏🙏🙏",
+      images:
+      ['']
     }
   ];
 
