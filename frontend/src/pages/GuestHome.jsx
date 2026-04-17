@@ -218,13 +218,15 @@ function Home() {
                   },
                 }}
               >
-                <Popup>
+                <Popup maxWidth={200} minWidth={150}>
                   {marker.images && marker.images.length > 0 ? (
-                  <Carousel>
-                  {marker.images.map((image, i) => (
-                  <img src={image} alt="Slide" key={i} />
-                  ))}
-                  </Carousel>
+                    <div className="w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto">
+                    <Carousel>
+                    {marker.images.map((image, i) => (
+                    <img src={image} alt="Slide" key={i} className="w-full h-40 sm:h-48 md:h-56 object-cover rounded-lg"/>
+                    ))}
+                    </Carousel>
+                    </div>
                   ) : null}
                   
                   <div style={{ fontSize: "20px"}}>

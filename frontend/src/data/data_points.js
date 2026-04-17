@@ -101,7 +101,7 @@ import gesu_1 from "../assets/pictures/gesu/gesu_1.png";
 import gesu_2 from "../assets/pictures/gesu/gesu_2.png";
 
 export const markers = [
-{ geocode:[14.634666,121.074539], popUp:"Gate 1",
+{ geocode:[14.634666,121.0746], popUp:"Gate 1",
     note: "Campus Access Point ",
     description: "Campus access point for pedestrians, located near the Ateneo Grade School. Closest access point from LRT2-Katipunan station and terminal for UP Diliman-bound jeepneys. Enter here for easier access to Line A e-jeep services, the Ateneo Grade School, and the Blue Eagle Gym." ,
     images:
