@@ -125,6 +125,9 @@ function Home() {
     fetchProfile()
   }, [])
 
+  const [comments, setComments] = useState([]);
+  const [commentText, setCommentText] = useState("");
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (
@@ -135,18 +138,40 @@ function Home() {
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   useEffect(() => {
-  const results = markers.filter((marker) =>
-    marker.popUp.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-  setFilteredMarkers(results);
-}, [searchQuery]);
+    const results = markers.filter((marker) =>
+      marker.popUp.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredMarkers(results);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    if (!from?.name || !to?.name) return;
+    api
+      .get(`/api/comments/?from=${from.name}&to=${to.name}`)
+      .then((res) => setComments(res.data))
+      .catch((err) => console.error(err));
+  }, [from, to]);
+
+  const handleAddComment = async () => {
+    if (!commentText.trim()) return;
+    try {
+      const res = await api.post("/api/comments/", {
+        from_location: from.name,
+        to_location: to.name,
+        text: commentText,
+      });
+      setComments((prev) => [res.data, ...prev]);
+      setCommentText("");
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const worldMask = [
     [
@@ -215,7 +240,6 @@ function Home() {
               setFrom({ name: value, coords: null });
             }}
           />
-
           {activeInput === "from" && (
             <div className="absolute top-full left-0 bg-white border w-full max-h-60 overflow-y-auto shadow-md rounded-md z-[2000]">
               {filteredMarkers.map((marker, index) => (
@@ -254,7 +278,6 @@ function Home() {
               setTo({ name: value, coords: null });
             }}
           />
-
           {activeInput === "to" && (
             <div className="absolute top-full left-0 bg-white border w-full max-h-60 overflow-y-auto shadow-md rounded-md z-[2000]">
               {filteredMarkers.map((marker, index) => (
@@ -474,19 +497,8 @@ function Home() {
             url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          <Polygon
-            positions={ateneoBoundary}
-            pathOptions={{ color: "blue", weight: 2,fill: false }}
-          />
-
-          <Polygon
-            positions={worldMask}
-            pathOptions={{
-              fillColor: "grey",
-              fillOpacity: 0.5,
-              stroke: false
-            }}
-          />
+          <Polygon positions={ateneoBoundary} pathOptions={{ color: "blue", weight: 2,fill: false }} />
+          <Polygon positions={worldMask} pathOptions={{ fillColor: "grey", fillOpacity: 0.5, stroke: false }} />
 
           {markers.map((marker, index) => (
               <Marker
@@ -520,19 +532,59 @@ function Home() {
                   </div>
                   <div style={{ backgroundColor: "#1a237e", display: "inline-block", color: "#FFFFFF", fontSize: "8px", marginRight: "4px" }}>
                   <b>{"⠀" + marker.note + "⠀"}</b>
-                  </div>
-                  <div>
-                  <p>{marker.description}</p>
-                  </div>
-                </Popup>
-              </Marker>
-            ))}
+                </div>
+                <div><p>{marker.description}</p></div>
+              </Popup>
+            </Marker>
+          ))}
 
           {from?.coords && to?.coords && (
             <RoutingMachine coords={[from.coords, to.coords]}/>
           )}
         </MapContainer>
+
+        <div className={`absolute bottom-0 left-0 right-0 z-[1000] bg-white transition-transform duration-300
+          ${from?.name && to?.name ? 'translate-y-0' : 'translate-y-full'}`}>
+          {from?.name && to?.name && (
+            <div className="p-4 max-h-60 overflow-y-auto">
+              <div className="font-semibold mb-2">
+                Comment for the route {from.name} to {to.name}
+              </div>
+
+              <div className="flex gap-2 mb-3">
+                <input
+                  className="flex-1 border px-2 py-1 outline-none"
+                  value={commentText}
+                  onChange={(e) => setCommentText(e.target.value)}
+                  placeholder="Add a comment..."
+                />
+                <button
+                  onClick={handleAddComment}
+                  className="bg-blue-500 text-white px-3 rounded"
+                >
+                  Send
+                </button>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                {comments.map((c) => (
+                  <div key={c.id} className="border p-2 rounded text-sm">
+                    {c.text}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
+      </div>
+
+      <div className="w-full flex justify-end p-4">
+        <button
+          onClick={() => navigate("/logout")}
+          className="bg-indigo-500 text-white py-2 px-4 rounded-xl font-semibold hover:bg-indigo-600 active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Logout
+        </button>
       </div>
     </div>
   )
