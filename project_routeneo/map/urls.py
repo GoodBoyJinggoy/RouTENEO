@@ -1,5 +1,5 @@
 from rest_framework.routers import DefaultRouter
-from .views import BuildingViewSet, CommentView, CommentAddView
+from .views import BuildingViewSet, CommentView, CommentAddView, RouteView
 from django.urls import path, include
 
 # https://av.tib.eu/media/45441
@@ -7,6 +7,7 @@ from django.urls import path, include
 
 router = DefaultRouter()
 router.register(r'buildings', BuildingViewSet, basename='building')
+router.register(r'routes', RouteView, basename='route')
 
 urlpatterns = [
     path('', include(router.urls)),
