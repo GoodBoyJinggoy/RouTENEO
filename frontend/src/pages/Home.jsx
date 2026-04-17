@@ -5,134 +5,17 @@ import pinIcon from "../assets/img/location-pin.png";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom"
 import Carousel from "../components/Carousel";
+import api from "../api";
 
 import gate1_1 from "../assets/pictures/gate1/gate1_1.png";
 import gate1_2 from "../assets/pictures/gate1/gate1_2.png";
 import gate1_3 from "../assets/pictures/gate1/gate1_3.png";
 
-// import gate2_1 from "../assets/pictures/gate2/gate2_1.png";
-// import gate2_2 from "../assets/pictures/gate2/gate2_2.png";
-// import gate2_3 from "../assets/pictures/gate2/gate2_3.png";
-
-// import gate3_5_1 from "../assets/pictures/gate3.5/gate3_5_1.png";
-// import gate3_5_2 from "../assets/pictures/gate3.5/gate3_5_2.png";
-// import gate3_5_3 from "../assets/pictures/gate3.5/gate3_5_3.png";
-
-// import ags_1 from "../assets/pictures/ags/ags_1.png";
-// import ags_2 from "../assets/pictures/ags/ags_2.png";
-// import ags_3 from "../assets/pictures/ags/ags_3.png";
-
-// import beg_1 from "../assets/pictures/beg/beg_1.png";
-// import beg_2 from "../assets/pictures/beg/beg_2.png";
-// import beg_3 from "../assets/pictures/beg/beg_3.png";
-
-// import arete_1 from "../assets/pictures/arete/arete_1.png";
-// import arete_2 from "../assets/pictures/arete/arete_2.png";
-// import arete_3 from "../assets/pictures/arete/arete_3.png";
-
-// import covcourt_1 from "../assets/pictures/covcourt/covcourt_1.png";
-// import covcourt_2 from "../assets/pictures/covcourt/covcourt_2.png";
-// import covcourt_3 from "../assets/pictures/covcourt/covcourt_3.png";
-
-// import bel_1 from "../assets/pictures/bel/bel_1.png";
-// import bel_2 from "../assets/pictures/bel/bel_2.png";
-// import bel_3 from "../assets/pictures/bel/bel_3.png";
-
-// import observatory_1 from "../assets/pictures/observatory/observatory_1.png";
-// import observatory_2 from "../assets/pictures/observatory/observatory_2.png";
-// import observatory_3 from "../assets/pictures/observatory/observatory_3.png";
-
-// import leong_1 from "../assets/pictures/leong/leong_1.png";
-// import leong_2 from "../assets/pictures/leong/leong_2.png";
-// import leong_3 from "../assets/pictures/leong/leong_3.png";
-
-// import xavier_1 from "../assets/pictures/xavier/xavier_1.png";
-// import xavier_2 from "../assets/pictures/xavier/xavier_2.png";
-// import xavier_3 from "../assets/pictures/xavier/xavier_3.png";
-
-// import faber_1 from "../assets/pictures/faber/faber_1.png";
-// import faber_2 from "../assets/pictures/faber/faber_2.png";
-// import faber_3 from "../assets/pictures/faber/faber_3.png";
-
-// import oldriz_1 from "../assets/pictures/oldriz/oldriz_1.png";
-// import oldriz_2 from "../assets/pictures/oldriz/oldriz_2.png";
-// import oldriz_3 from "../assets/pictures/oldriz/oldriz_3.png";
-
-// import socsci_1 from "../assets/pictures/socsci/socsci_1.png";
-// import socsci_2 from "../assets/pictures/socsci/socsci_2.png";
-// import socsci_3 from "../assets/pictures/socsci/socsci_3.png";
-
-// import kostka_1 from "../assets/pictures/kostka/kostka_1.png";
-// import kostka_2 from "../assets/pictures/kostka/kostka_2.png";
-// import kostka_3 from "../assets/pictures/kostka/kostka_3.png";
-
-// import mvp_1 from "../assets/pictures/mvp/mvp_1.png";
-// import mvp_2 from "../assets/pictures/mvp/mvp_2.png";
-// import mvp_3 from "../assets/pictures/mvp/mvp_3.png";
-
-// import delacosta_1 from "../assets/pictures/delacosta/delacosta_1.png";
-// import delacosta_2 from "../assets/pictures/delacosta/delacosta_2.png";
-// import delacosta_3 from "../assets/pictures/delacosta/delacosta_3.png";
-
-// import newriz_1 from "../assets/pictures/newriz/newriz_1.png";
-// import newriz_2 from "../assets/pictures/newriz/newriz_2.png";
-// import newriz_3 from "../assets/pictures/newriz/newriz_3.png";
-
-// import berch_1 from "../assets/pictures/berch/berch_1.png";
-// import berch_2 from "../assets/pictures/berch/berch_2.png";
-// import berch_3 from "../assets/pictures/berch/berch_3.png";
-
 import faura_1 from "../assets/pictures/faura/faura_1.jpg";
 import faura_2 from "../assets/pictures/faura/faura_2.jpg";
-// import faura_3 from "../assets/pictures/faura/faura_3.png";
-
-// import schmitt_1 from "../assets/pictures/schmitt/schmitt_1.png";
-// import schmitt_2 from "../assets/pictures/schmitt/schmitt_2.png";
-// import schmitt_3 from "../assets/pictures/schmitt/schmitt_3.png";
-
-// import gonz_1 from "../assets/pictures/gonz/gonz_1.png";
-// import gonz_2 from "../assets/pictures/gonz/gonz_2.png";
-// import gonz_3 from "../assets/pictures/gonz/gonz_3.png";
-
-// import pipac_1 from "../assets/pictures/pipac/pipac_1.png";
-// import pipac_2 from "../assets/pictures/pipac/pipac_2.png";
-// import pipac_3 from "../assets/pictures/pipac/pipac_3.png";
-
-// import seca_1 from "../assets/pictures/seca/seca_1.png";
-// import seca_2 from "../assets/pictures/seca/seca_2.png";
-// import seca_3 from "../assets/pictures/seca/seca_3.png";
-
-// import secb_1 from "../assets/pictures/secb/secb_1.png";
-// import secb_2 from "../assets/pictures/secb/secb_2.png";
-// import secb_3 from "../assets/pictures/secb/secb_3.png";
-
-// import secc_1 from "../assets/pictures/secc/secc_1.png";
-// import secc_2 from "../assets/pictures/secc/secc_2.png";
-// import secc_3 from "../assets/pictures/secc/secc_3.png";
-
-// import ctc_1 from "../assets/pictures/ctc/ctc_1.png";
-// import ctc_2 from "../assets/pictures/ctc/ctc_2.png";
-// import ctc_3 from "../assets/pictures/ctc/ctc_3.png";
-
-// import som_1 from "../assets/pictures/som/som_1.png";
-// import som_2 from "../assets/pictures/som/som_2.png";
-// import som_3 from "../assets/pictures/som/som_3.png";
-
-// import jsec_1 from "../assets/pictures/jsec/jsec_1.png";
-// import jsec_2 from "../assets/pictures/jsec/jsec_2.png";
-// import jsec_3 from "../assets/pictures/jsec/jsec_3.png";
-
-// import macci_1 from "../assets/pictures/macci/macci_1.png";
-// import macci_2 from "../assets/pictures/macci/macci_2.png";
-// import macci_3 from "../assets/pictures/macci/macci_3.png";
 
 function Home() {
 
-  // note
-  // if anyone wants to change the descriptions or anything please feel free to do so !!!
-  // i mightve been hallucinating, i wrote most of these from memory
-  // - cde
-  
   const markers = [
   { geocode:[14.634666,121.074539], popUp:"Gate 1", 
     note: "Campus Access Point ", 
@@ -256,7 +139,6 @@ function Home() {
     images:
     [ faura_1,
       faura_2
-      // faura_3
     ]
   },
   { geocode:[14.639145,121.077578], popUp:"Schmitt Hall",
@@ -329,6 +211,9 @@ function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredMarkers, setFilteredMarkers] = useState(markers);
 
+  const [comments, setComments] = useState([]);
+  const [commentText, setCommentText] = useState("");
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (
@@ -339,18 +224,40 @@ function Home() {
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   useEffect(() => {
-  const results = markers.filter((marker) =>
-    marker.popUp.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-  setFilteredMarkers(results);
-}, [searchQuery]);
+    const results = markers.filter((marker) =>
+      marker.popUp.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredMarkers(results);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    if (!from?.name || !to?.name) return;
+    api
+      .get(`/api/comments/?from=${from.name}&to=${to.name}`)
+      .then((res) => setComments(res.data))
+      .catch((err) => console.error(err));
+  }, [from, to]);
+
+  const handleAddComment = async () => {
+    if (!commentText.trim()) return;
+    try {
+      const res = await api.post("/api/comments/", {
+        from_location: from.name,
+        to_location: to.name,
+        text: commentText,
+      });
+      setComments((prev) => [res.data, ...prev]);
+      setCommentText("");
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const ateneoBoundary = [
     [14.641585, 121.074739],
@@ -385,8 +292,6 @@ function Home() {
     [14.642180, 121.077768],
     [14.642176, 121.076099],
     [14.642330, 121.075651],
-    
-    
   ];
 
   const worldMask = [
@@ -431,7 +336,6 @@ function Home() {
               else if (activeInput === "to") setTo({ name: value, coords: null });
             }}
           />
-
           {activeInput === "from" && (
             <div className="absolute top-full left-0 bg-white border w-52 max-h-60 overflow-y-auto shadow-md rounded-md z-[1100]">
               {filteredMarkers.map((marker, index) => (
@@ -470,7 +374,6 @@ function Home() {
               else if (activeInput === "to") setTo({ name: value, coords: null });
             }}
           />
-
           {activeInput === "to" && (
             <div className="absolute top-full left-0 bg-white border w-52 max-h-60 overflow-y-auto shadow-md rounded-md z-[1100]">
               {filteredMarkers.map((marker, index) => (
@@ -491,7 +394,7 @@ function Home() {
         </div>
       </div>
 
-      <div className="m-4 border-2 border-black-500">
+      <div className="m-4 relative border-2 border-black">
         <MapContainer
           center={[14.6396,121.0786]}
           zoom={17}
@@ -506,77 +409,87 @@ function Home() {
             url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          <Polygon
-            positions={ateneoBoundary}
-            pathOptions={{ color: "blue", weight: 2,fill: false }}
-          />
-
-          <Polygon
-            positions={worldMask}
-            pathOptions={{
-              fillColor: "grey",
-              fillOpacity: 0.5,
-              stroke: false
-            }}
-          />
+          <Polygon positions={ateneoBoundary} pathOptions={{ color: "blue", weight: 2,fill: false }} />
+          <Polygon positions={worldMask} pathOptions={{ fillColor: "grey", fillOpacity: 0.5, stroke: false }} />
 
           {markers.map((marker, index) => (
-              <Marker
-                key={index}
-                position={marker.geocode}
-                icon={customIcon}
-                eventHandlers={{
-                  click: () => {
-                    if (activeInput === "from") {
-                      setFrom({ name: marker.popUp, coords: marker.geocode });
-                    } else if (activeInput === "to") {
-                      setTo({ name: marker.popUp, coords: marker.geocode });
-                    }
-                    setActiveInput(null);
-                  },
-                }}
-              >
-                <Popup>
-                  {marker.images && marker.images.length > 0 ? (
+            <Marker
+              key={index}
+              position={marker.geocode}
+              icon={customIcon}
+              eventHandlers={{
+                click: () => {
+                  if (activeInput === "from") setFrom({ name: marker.popUp, coords: marker.geocode });
+                  else if (activeInput === "to") setTo({ name: marker.popUp, coords: marker.geocode });
+                  setActiveInput(null);
+                },
+              }}
+            >
+              <Popup>
+                {marker.images && marker.images.length > 0 ? (
                   <Carousel>
-                  {marker.images.map((image, i) => (
-                  <img src={image} alt="Slide" key={i} />
-                  ))}
+                    {marker.images.map((image, i) => (
+                      <img src={image} alt="Slide" key={i} />
+                    ))}
                   </Carousel>
-                  ) : null}
-                  
-                  <div style={{ fontSize: "20px"}}>
-                  <strong>{marker.popUp}</strong>
-                  </div>
-                  <div style={{ backgroundColor: "#1a237e", display: "inline-block", color: "#FFFFFF", fontSize: "8px", marginRight: "4px" }}>
+                ) : null}
+                <div style={{ fontSize: "20px"}}><strong>{marker.popUp}</strong></div>
+                <div style={{ backgroundColor: "#1a237e", display: "inline-block", color: "#FFFFFF", fontSize: "8px", marginRight: "4px" }}>
                   <b>{"⠀" + marker.note + "⠀"}</b>
-                  </div>
-                  <div>
-                  <p>{marker.description}</p>
-                  </div>
-                </Popup>
-              </Marker>
-            ))}
+                </div>
+                <div><p>{marker.description}</p></div>
+              </Popup>
+            </Marker>
+          ))}
 
           {from?.coords && to?.coords && (
-            <Polyline
-              positions={[from.coords, to.coords]}
-              pathOptions={{ color: "red", weight: 4 }}
-            />
+            <Polyline positions={[from.coords, to.coords]} pathOptions={{ color: "red", weight: 4 }} />
           )}
         </MapContainer>
+
+        <div className={`absolute bottom-0 left-0 right-0 z-[1000] bg-white transition-transform duration-300
+          ${from?.name && to?.name ? 'translate-y-0' : 'translate-y-full'}`}>
+          {from?.name && to?.name && (
+            <div className="p-4 max-h-60 overflow-y-auto">
+              <div className="font-semibold mb-2">
+                Comment for the route {from.name} to {to.name}
+              </div>
+
+              <div className="flex gap-2 mb-3">
+                <input
+                  className="flex-1 border px-2 py-1 outline-none"
+                  value={commentText}
+                  onChange={(e) => setCommentText(e.target.value)}
+                  placeholder="Add a comment..."
+                />
+                <button
+                  onClick={handleAddComment}
+                  className="bg-blue-500 text-white px-3 rounded"
+                >
+                  Send
+                </button>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                {comments.map((c) => (
+                  <div key={c.id} className="border p-2 rounded text-sm">
+                    {c.text}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="w-full flex justify-end p-4">
-      <button
-        onClick={() => navigate("/logout")}
-        className="bg-indigo-500 text-white py-2 px-4 rounded-xl font-semibold
-                  hover:bg-indigo-600 active:scale-95 transition-all duration-200
-                  disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        Logout
-      </button>
-    </div>
+        <button
+          onClick={() => navigate("/logout")}
+          className="bg-indigo-500 text-white py-2 px-4 rounded-xl font-semibold hover:bg-indigo-600 active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Logout
+        </button>
+      </div>
     </div>
   )
 }
