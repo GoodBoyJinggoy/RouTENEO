@@ -5,7 +5,11 @@ class Building(models.Model):
     building_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     latitude = models.FloatField()
-    longitude = models.FloatField()
+    longitude = models.FloatField()   
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
 
 class Route(models.Model):
     route_id = models.AutoField(primary_key=True)

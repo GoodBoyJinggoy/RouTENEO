@@ -1,0 +1,312 @@
+[
+{
+  "model": "map.building",
+  "pk": 1,
+  "fields": {
+    "name": "Gate 1",
+    "latitude": 14.6410904,
+    "longitude": 121.0737779,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 2,
+  "fields": {
+    "name": "Gate 2",
+    "latitude": 14.6312958,
+    "longitude": 121.0729356,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 3,
+  "fields": {
+    "name": "Gate 3.5",
+    "latitude": 14.6413829,
+    "longitude": 121.0747507,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 4,
+  "fields": {
+    "name": "Ateneo Grade School",
+    "latitude": 14.6339593,
+    "longitude": 121.0776344,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 5,
+  "fields": {
+    "name": "Blue Eagle Gym",
+    "latitude": 14.6352379,
+    "longitude": 121.075555,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 6,
+  "fields": {
+    "name": "Arete",
+    "latitude": 14.6414527,
+    "longitude": 121.0754824,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 7,
+  "fields": {
+    "name": "Covered Courts",
+    "latitude": 14.6439839,
+    "longitude": 121.0822841,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 8,
+  "fields": {
+    "name": "Bellarmine Hall",
+    "latitude": 14.6416029,
+    "longitude": 121.0797295,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 9,
+  "fields": {
+    "name": "Manila Observatory",
+    "latitude": 14.6360205,
+    "longitude": 121.07784,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 10,
+  "fields": {
+    "name": "Leong Hall",
+    "latitude": 14.6406542,
+    "longitude": 121.0762209,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 11,
+  "fields": {
+    "name": "Xavier Hall",
+    "latitude": 14.6399645,
+    "longitude": 121.0784825,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 12,
+  "fields": {
+    "name": "Faber Hall",
+    "latitude": 14.6402851,
+    "longitude": 121.0778884,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 13,
+  "fields": {
+    "name": "Rizal Library",
+    "latitude": 14.6402535,
+    "longitude": 121.0775397,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 14,
+  "fields": {
+    "name": "Social Sciences Building",
+    "latitude": 14.6405984,
+    "longitude": 121.0767957,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 15,
+  "fields": {
+    "name": "Kostka Hall",
+    "latitude": 14.6397628,
+    "longitude": 121.0780843,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 16,
+  "fields": {
+    "name": "Manuel V. Pangilinan Student Leadership Center",
+    "latitude": 14.6396427,
+    "longitude": 121.0774708,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 17,
+  "fields": {
+    "name": "Dela Costa Hall",
+    "latitude": 14.6399185,
+    "longitude": 121.0767538,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 18,
+  "fields": {
+    "name": "New Rizal Library",
+    "latitude": 14.6400248,
+    "longitude": 121.0758093,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 19,
+  "fields": {
+    "name": "Berchmans Hall",
+    "latitude": 14.6394671,
+    "longitude": 121.0785352,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 20,
+  "fields": {
+    "name": "Faura Hall",
+    "latitude": 14.6395834,
+    "longitude": 121.0767214,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 21,
+  "fields": {
+    "name": "Schmitt Hall",
+    "latitude": 14.639196,
+    "longitude": 121.0774778,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 22,
+  "fields": {
+    "name": "Gonzaga Hall",
+    "latitude": 14.6389243,
+    "longitude": 121.0779708,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 23,
+  "fields": {
+    "name": "PIPAC",
+    "latitude": 14.6389731,
+    "longitude": 121.0767709,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 24,
+  "fields": {
+    "name": "SEC A",
+    "latitude": 14.6383202,
+    "longitude": 121.077735,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 25,
+  "fields": {
+    "name": "SEC B",
+    "latitude": 14.6378692,
+    "longitude": 121.0772575,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 26,
+  "fields": {
+    "name": "SEC C",
+    "latitude": 14.6379292,
+    "longitude": 121.0768217,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 27,
+  "fields": {
+    "name": "PLDT-CTC",
+    "latitude": 14.6382138,
+    "longitude": 121.0764696,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 28,
+  "fields": {
+    "name": "JG School of Management Building",
+    "latitude": 14.6384313,
+    "longitude": 121.0762502,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 29,
+  "fields": {
+    "name": "JSEC",
+    "latitude": 14.6378,
+    "longitude": 121.0764342,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 30,
+  "fields": {
+    "name": "Matteo Ricci Hall",
+    "latitude": 14.6375075,
+    "longitude": 121.0769751,
+    "description": ""
+  }
+},
+{
+  "model": "map.building",
+  "pk": 31,
+  "fields": {
+    "name": "Church of the Gesu",
+    "latitude": 14.6402366,
+    "longitude": 121.0799729,
+    "description": ""
+  }
+}
+]
