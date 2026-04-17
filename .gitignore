@@ -1,6 +1,7 @@
 #source: https://github.com/github/gitignore/blob/main/Python.gitignore
 
 venv/
+profiles
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
