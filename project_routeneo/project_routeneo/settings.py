@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'accounts',
     'corsheaders',
     'map',
+    'comments',
 ]
 
 MIDDLEWARE = [
