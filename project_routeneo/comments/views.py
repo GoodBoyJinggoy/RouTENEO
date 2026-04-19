@@ -4,6 +4,8 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .models import Comment
 from .serializers import CommentSerializer
+from django.shortcuts import get_object_or_404
+
 
 
 class CommentsView(APIView):
@@ -54,3 +56,34 @@ class CommentsView(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+    
+    def patch(self, request, id):
+        comment = get_object_or_404(Comment, id=id)
+
+        # Only owner can edit
+        if comment.user != request.user:
+            return Response({"error": "Not allowed"}, status=403)
+
+        serializer = CommentSerializer(
+            comment,
+            data=request.data,
+            partial=True,
+            context={"request": request}
+        )
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+        return Response(serializer.errors, status=400)
+
+
+    def delete(self, request, id):
+        comment = get_object_or_404(Comment, id=id)
+
+        # Only owner can delete
+        if comment.user != request.user:
+            return Response({"error": "Not allowed"}, status=403)
+
+        comment.delete()
+        return Response({"message": "Deleted"}, status=204)

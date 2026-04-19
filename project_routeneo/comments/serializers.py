@@ -5,11 +5,13 @@ from .models import Comment
 class CommentSerializer(serializers.ModelSerializer):
     display_name = serializers.SerializerMethodField()
     profile_picture = serializers.SerializerMethodField()
+    user_id = serializers.IntegerField(source="user.id", read_only=True)
 
     class Meta:
         model = Comment
         fields = [
             "id",
+            "user_id",
             "display_name",
             "profile_picture",
             "from_location",
@@ -40,7 +42,6 @@ class CommentSerializer(serializers.ModelSerializer):
 
         url = profile.profile_picture.url
 
-        # THIS is the key fix
         if request:
             return request.build_absolute_uri(url)
 

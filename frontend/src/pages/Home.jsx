@@ -172,6 +172,47 @@ function Home() {
     }
   };
 
+  const [deleteId, setDeleteId] = useState(null);
+
+  const confirmDelete = (id) => {
+    setDeleteId(id);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await api.delete(`/api/comments/${deleteId}/`);
+      setComments((prev) => prev.filter((c) => c.id !== deleteId));
+      setDeleteId(null);
+    } catch (err) {
+      console.error(err.response?.data || err);
+    }
+  };
+
+  const [editingId, setEditingId] = useState(null);
+  const [editText, setEditText] = useState("");
+
+  const handleEdit = (comment) => {
+    setEditingId(comment.id);
+    setEditText(comment.text);
+  };
+
+  const handleSaveEdit = async (id) => {
+    try {
+      const res = await api.patch(`/api/comments/${id}/`, {
+        text: editText,
+      });
+
+      setComments((prev) =>
+        prev.map((c) => (c.id === id ? res.data : c))
+      );
+
+      setEditingId(null);
+      setEditText("");
+    } catch (err) {
+      console.error(err.response?.data || err);
+    }
+  };
+
   const worldMask = [
     [
       [-90, -180],
@@ -300,7 +341,7 @@ function Home() {
 
       {/* RIGHT: Profile */}
         <div
-          className="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center cursor-pointer overflow-hidden ml-3 shrink-0"
+          className="w-10 h-10 rounded-full bg-blue-400 flex items-center justify-center cursor-pointer overflow-hidden ml-3 shrink-0"
           onClick={() => setShowProfile(true)}
         >
           {user?.profile_picture ? (
@@ -310,7 +351,7 @@ function Home() {
             />
           ) : (
             <span className="text-white font-bold">
-              {user?.first_name?.[0] || "U"}
+              👤
             </span>
           )}
         </div>
@@ -325,7 +366,7 @@ function Home() {
           <button onClick={() => setShowProfile(false)}>✕</button>
 
           <div className="flex flex-col items-center gap-3">
-            <div className="w-20 h-20 rounded-full bg-gray-300 overflow-hidden flex items-center justify-center">
+            <div className="w-20 h-20 rounded-full bg-blue-300 overflow-hidden flex items-center justify-center">
                     {user?.profile_picture ? (
                 <img
                   src={user.profile_picture}
@@ -333,7 +374,7 @@ function Home() {
                 />
               ) : (
                 <span className="text-white font-bold text-[120%]">
-                  {user?.first_name?.[0] || "U"}
+                  👤
                 </span>
               )}
             </div>
@@ -542,8 +583,9 @@ function Home() {
           )}
           </MapContainer>
         </div>
+      </div>
 
-        {/* COMMENTS SECTION */}
+              {/* COMMENTS SECTION */}
 <div className="m-4">
   {from?.name && to?.name && (
     <div className="p-5 max-h-[340px] overflow-y-auto">
@@ -560,46 +602,47 @@ function Home() {
 
       {/* Add Comment Box */}
       <div className="bg-gray-50 border rounded-2xl p-4 shadow-sm mb-4">
-        <div className="flex items-start gap-3">
-          
-          {/* User Profile */}
-          <div className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden flex items-center justify-center shrink-0">
-            {user?.profile_picture ? (
-              <img
-                src={user.profile_picture}
-                alt="Profile"
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <span className="text-white font-semibold">
-                {user?.first_name?.[0] || "U"}
-              </span>
-            )}
-          </div>
+          <div className="flex items-start gap-3">
 
-          <div className="flex-1">
-            <p className="text-sm font-medium text-gray-700 mb-2">
-              {user?.display_name ||
-                `${user?.first_name || ""} ${user?.last_name || ""}`}
-            </p>
+            {/* User Profile */}
+            <div className="w-10 h-10 rounded-full bg-blue-300 overflow-hidden flex items-center justify-center shrink-0">
+              {user?.profile_picture ? (
+                <img
+                  src={user.profile_picture}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span>👤</span>
+              )}
+            </div>
 
-            <div className="flex gap-2">
-              <input
-                className="flex-1 border border-gray-300 rounded-xl px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 bg-white"
-                value={commentText}
-                onChange={(e) => setCommentText(e.target.value)}
-                placeholder="Share route tips, shortcuts, warnings..."
-              />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-gray-700 mb-2">
+                {user?.display_name ||
+                  `${user?.first_name || ""} ${user?.last_name || ""}`}
+              </p>
 
-              <button
-                onClick={handleAddComment}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-5 rounded-xl font-medium transition"
-              >
-                Post
-              </button>
+              {/* Responsive Input + Button */}
+              <div className="flex flex-col sm:flex-row gap-2">
+
+                <input
+                  className="flex-1 border border-gray-300 rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 bg-white w-full "
+                  value={commentText}
+                  onChange={(e) => setCommentText(e.target.value)}
+                  placeholder="Comment something!"
+                />
+
+                <button
+                  onClick={handleAddComment}
+                  className="bg-blue-600hover:bg-blue-700text-whitepx-6py-3rounded-xlfont-mediumtransitionw-fullsm:w-autowhitespace-nowrapshrink-0"
+                >
+                  Post
+                </button>
+
+              </div>
             </div>
           </div>
-        </div>
       </div>
 
       {/* Comments List */}
@@ -613,7 +656,7 @@ function Home() {
               <div className="flex items-start gap-3">
                 
                 {/* Comment User Profile */}
-                <div className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-full bg-blue-300 overflow-hidden flex items-center justify-center shrink-0">
                 {c.profile_picture ? (
                   <img
                     src={c.profile_picture}
@@ -622,7 +665,7 @@ function Home() {
                   />
                 ) : (
                   <span className="text-white font-semibold">
-                    {c.display_name?.[0] || "U"}
+                    👤
                   </span>
                 )}
                 </div>
@@ -638,11 +681,82 @@ function Home() {
                         {new Date(c.created_at).toLocaleDateString()}
                       </span>
                     )}
+
+                    {c.user_id === user?.id && (
+                    <div className="flex gap-2 mt-2">
+                      <button
+                        onClick={() => confirmDelete(c.id)}
+                        className="text-red-500 text-xs"
+                      >
+                        Delete
+                      </button>
+
+                      <button
+                        onClick={() => handleEdit(c)}
+                        className="text-blue-500 text-xs"
+                      >
+                        Edit
+                      </button>
+                    </div>
+                  )}
                   </div>
 
-                  <p className="text-sm text-gray-600 mt-1 leading-relaxed">
-                    {c.text}
-                  </p>
+                  {deleteId && (
+                  <div className="fixed inset-0 flex items-center justify-center z-[3000]">
+                    <div className="bg-white rounded-2xl p-6 shadow-lg w-80">
+                      <h3 className="text-lg font-semibold text-gray-800">
+                        Delete Comment?
+                      </h3>
+                      <p className="text-sm text-gray-500 mt-2">
+                        This action cannot be undone.
+                      </p>
+
+                      <div className="flex justify-end gap-2 mt-4">
+                        <button
+                          onClick={() => setDeleteId(null)}
+                          className="px-4 py-2 text-sm bg-gray-200 rounded-lg hover:bg-gray-300"
+                        >
+                          Cancel
+                        </button>
+
+                        <button
+                          onClick={handleDelete}
+                          className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                  {editingId === c.id ? (
+                    <div className="mt-2">
+                      <textarea
+                        value={editText}
+                        onChange={(e) => setEditText(e.target.value)}
+                        className="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-300"
+                      />
+
+                      <div className="flex gap-2 mt-2">
+                        <button
+                          onClick={() => handleSaveEdit(c.id)}
+                          className="bg-blue-500 text-white px-3 py-1 rounded-lg text-xs hover:bg-blue-600"
+                        >
+                          Save
+                        </button>
+
+                        <button
+                          onClick={() => setEditingId(null)}
+                          className="bg-gray-200 px-3 py-1 rounded-lg text-xs hover:bg-gray-300"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-sm text-gray-600 mt-1">{c.text}</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -656,7 +770,6 @@ function Home() {
     </div>
   )}
 </div>
-      </div>
     </div>
   )
 }

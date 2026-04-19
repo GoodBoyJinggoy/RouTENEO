@@ -309,7 +309,7 @@ function GuestHome() {
               <div className="flex items-start gap-3">
 
                 {/* Avatar */}
-                <div className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-full bg-blue-300 overflow-hidden flex items-center justify-center shrink-0">
                   {c.profile_picture ? (
                     <img
                       src={c.profile_picture}
@@ -318,7 +318,7 @@ function GuestHome() {
                     />
                   ) : (
                     <span className="text-white font-semibold">
-                      {c.display_name?.[0] || "U"}
+                      👤
                     </span>
                   )}
                 </div>
