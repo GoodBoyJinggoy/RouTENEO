@@ -7,10 +7,11 @@ import { useNavigate } from "react-router-dom"
 import Carousel from "../components/Carousel";
 import { markers } from "../data/data_points";
 import { ateneoBoundary } from "../data/data_points";
+import api from "../api"
 
 import RoutingMachine from "./RoutingMachine";
 
-function Home() {
+function GuestHome() {
 
   const navigate = useNavigate()
   const [from, setFrom] = useState(null);
@@ -62,6 +63,40 @@ function Home() {
     iconUrl: pinIcon,
     iconSize:[20,20]
   });
+
+  const [comments, setComments] = useState([]);
+  const [commentText, setCommentText] = useState("");
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        inputContainerRef.current &&
+        !inputContainerRef.current.contains(event.target)
+      ) {
+        setActiveInput(null);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    const results = markers.filter((marker) =>
+      marker.popUp.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredMarkers(results);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    if (!from?.name || !to?.name) return;
+    api
+      .get(`/api/comments/?from=${from.name}&to=${to.name}`)
+      .then((res) => setComments(res.data))
+      .catch((err) => console.error(err));
+  }, [from, to]);
+
 
   return (
     <div>
@@ -248,8 +283,83 @@ function Home() {
         </MapContainer>
         </div>
       </div>
+
+      <div className="m-4">
+  {from?.name && to?.name ? (
+    <div className="p-5 max-h-[340px] overflow-y-auto">
+      
+      {/* Header */}
+      <div className="mb-4">
+        <h2 className="text-lg font-semibold text-gray-800">
+          Route Comments
+        </h2>
+        <p className="text-sm text-gray-500">
+          {from.name} → {to.name}
+        </p>
+      </div>
+
+      {/* Comments List */}
+      <div className="space-y-3">
+        {Array.isArray(comments) && comments.length > 0 ? (
+          comments.map((c) => (
+            <div
+              key={c.id}
+              className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm"
+            >
+              <div className="flex items-start gap-3">
+
+                {/* Avatar */}
+                <div className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden flex items-center justify-center shrink-0">
+                  {c.profile_picture ? (
+                    <img
+                      src={c.profile_picture}
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-white font-semibold">
+                      {c.display_name?.[0] || "U"}
+                    </span>
+                  )}
+                </div>
+
+                {/* Content */}
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <p className="font-semibold text-gray-800 text-sm">
+                      {c.display_name || "Anonymous"}
+                    </p>
+
+                    {c.created_at && (
+                      <span className="text-xs text-gray-400">
+                        {new Date(c.created_at).toLocaleDateString()}
+                      </span>
+                    )}
+                  </div>
+
+                  <p className="text-sm text-gray-600 mt-1">
+                    {c.text}
+                  </p>
+                </div>
+
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="text-center text-sm text-gray-500 py-6 border rounded-2xl bg-gray-50">
+            No comments available for this route.
+          </div>
+        )}
+      </div>
+    </div>
+  ) : (
+    <div className="m-4 text-sm text-gray-500">
+      Select a route to view comments.
+    </div>
+  )}
+</div>
     </div>
   )
 }
 
-export default Home
+export default GuestHome

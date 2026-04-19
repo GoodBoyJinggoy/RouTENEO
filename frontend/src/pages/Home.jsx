@@ -30,7 +30,6 @@ function Home() {
   const [displayName, setDisplayName] = useState("")
   const [showUpload, setShowUpload] = useState(false);
   const fileInputRef = useRef(null);
-
   const [profileFile, setProfileFile] = useState(null);
 
   const handleUploadPfp = async () => {
@@ -544,48 +543,119 @@ function Home() {
           </MapContainer>
         </div>
 
-        <div className={`absolute bottom-0 left-0 right-0 z-[1000] bg-white transition-transform duration-300
-          ${from?.name && to?.name ? 'translate-y-0' : 'translate-y-full'}`}>
-          {from?.name && to?.name && (
-            <div className="p-4 max-h-60 overflow-y-auto">
-              <div className="font-semibold mb-2">
-                Comment for the route {from.name} to {to.name}
-              </div>
+        {/* COMMENTS SECTION */}
+<div className="m-4">
+  {from?.name && to?.name && (
+    <div className="p-5 max-h-[340px] overflow-y-auto">
+      
+      {/* Header */}
+      <div className="mb-4">
+        <h2 className="text-lg font-semibold text-gray-800">
+          Route Comments
+        </h2>
+        <p className="text-sm text-gray-500">
+          {from.name} → {to.name}
+        </p>
+      </div>
 
-              <div className="flex gap-2 mb-3">
-                <input
-                  className="flex-1 border px-2 py-1 outline-none"
-                  value={commentText}
-                  onChange={(e) => setCommentText(e.target.value)}
-                  placeholder="Add a comment..."
-                />
-                <button
-                  onClick={handleAddComment}
-                  className="bg-blue-500 text-white px-3 rounded"
-                >
-                  Send
-                </button>
-              </div>
+      {/* Add Comment Box */}
+      <div className="bg-gray-50 border rounded-2xl p-4 shadow-sm mb-4">
+        <div className="flex items-start gap-3">
+          
+          {/* User Profile */}
+          <div className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden flex items-center justify-center shrink-0">
+            {user?.profile_picture ? (
+              <img
+                src={user.profile_picture}
+                alt="Profile"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <span className="text-white font-semibold">
+                {user?.first_name?.[0] || "U"}
+              </span>
+            )}
+          </div>
 
-              <div className="flex flex-col gap-2">
-                {comments.map((c) => (
-                  <div key={c.id} className="border p-2 rounded text-sm">
-                    {c.text}
-                  </div>
-                ))}
-              </div>
+          <div className="flex-1">
+            <p className="text-sm font-medium text-gray-700 mb-2">
+              {user?.display_name ||
+                `${user?.first_name || ""} ${user?.last_name || ""}`}
+            </p>
+
+            <div className="flex gap-2">
+              <input
+                className="flex-1 border border-gray-300 rounded-xl px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 bg-white"
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
+                placeholder="Share route tips, shortcuts, warnings..."
+              />
+
+              <button
+                onClick={handleAddComment}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-5 rounded-xl font-medium transition"
+              >
+                Post
+              </button>
             </div>
-          )}
+          </div>
         </div>
       </div>
 
-      <div className="w-full flex justify-end p-4">
-        <button
-          onClick={() => navigate("/logout")}
-          className="bg-indigo-500 text-white py-2 px-4 rounded-xl font-semibold hover:bg-indigo-600 active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Logout
-        </button>
+      {/* Comments List */}
+      <div className="space-y-3">
+        {comments.length > 0 ? (
+          comments.map((c) => (
+            <div
+              key={c.id}
+              className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition"
+            >
+              <div className="flex items-start gap-3">
+                
+                {/* Comment User Profile */}
+                <div className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden flex items-center justify-center shrink-0">
+                {c.profile_picture ? (
+                  <img
+                    src={c.profile_picture}
+                    alt="Profile"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span className="text-white font-semibold">
+                    {c.display_name?.[0] || "U"}
+                  </span>
+                )}
+                </div>
+
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <p className="font-semibold text-gray-800 text-sm">
+                      {c.display_name || "Anonymous User"}
+                    </p>
+
+                    {c.created_at && (
+                      <span className="text-xs text-gray-400">
+                        {new Date(c.created_at).toLocaleDateString()}
+                      </span>
+                    )}
+                  </div>
+
+                  <p className="text-sm text-gray-600 mt-1 leading-relaxed">
+                    {c.text}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="text-center text-sm text-gray-500 py-6 border rounded-2xl bg-gray-50">
+            No comments available for this route.
+          </div>
+        )}
+      </div>
+    </div>
+  )}
+</div>
       </div>
     </div>
   )
