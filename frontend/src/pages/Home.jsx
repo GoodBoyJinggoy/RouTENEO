@@ -646,7 +646,7 @@ function Home() {
       </div>
 
       {/* Comments List */}
-      <div className="space-y-3">
+      <div className="m-4 space-y-3">
         {comments.length > 0 ? (
           comments.map((c) => (
             <div
@@ -686,14 +686,14 @@ function Home() {
                     <div className="flex gap-2 mt-2">
                       <button
                         onClick={() => confirmDelete(c.id)}
-                        className="text-red-500 text-xs"
+                        className="text-red-500 text-xs hover:underline"
                       >
                         Delete
                       </button>
 
                       <button
                         onClick={() => handleEdit(c)}
-                        className="text-blue-500 text-xs"
+                        className="text-blue-500 text-xs hover:underline"
                       >
                         Edit
                       </button>

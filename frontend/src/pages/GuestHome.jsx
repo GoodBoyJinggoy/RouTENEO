@@ -304,7 +304,7 @@ function GuestHome() {
           comments.map((c) => (
             <div
               key={c.id}
-              className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm"
+              className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition"
             >
               <div className="flex items-start gap-3">
 
