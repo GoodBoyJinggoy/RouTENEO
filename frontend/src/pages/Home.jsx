@@ -635,7 +635,7 @@ function Home() {
 
                 <button
                   onClick={handleAddComment}
-                  className="bg-blue-600hover:bg-blue-700text-whitepx-6py-3rounded-xlfont-mediumtransitionw-fullsm:w-autowhitespace-nowrapshrink-0"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-medium transition w-full sm:w-auto whitespace-nowrap shrink-0"
                 >
                   Post
                 </button>
