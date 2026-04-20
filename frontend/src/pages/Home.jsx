@@ -209,112 +209,112 @@ function Home() {
 
       <div className="fixed top-0 left-0 w-full bg-blue-800 shadow-md z-[1500] px-4 py-3 flex items-start justify-between">
 
-      {/* LEFT: From + To */}
-      <div className="flex flex-col gap-1">
-        <h1
-          className="absolute inset-0 flex items-center justify-center text-white opacity-80 pointer-events-none select-none"
-          style={{
-            fontFamily: "'Faster One', cursive",
-            fontSize: "3rem", 
-          }}
-        >
-          RouTENEO
-        </h1>
+        {/* LEFT: From + To */}
+        <div className="flex flex-col gap-1">
+          <h1
+            className="absolute inset-0 flex items-center justify-center text-white opacity-80 pointer-events-none select-none"
+            style={{
+              fontFamily: "'Faster One', cursive",
+              fontSize: "3rem", 
+            }}
+          >
+            RouTENEO
+          </h1>
 
-        {/* FROM */}
-        <div className="relative">
-          <input
-            className={`block w-60 max-w-[70vw] px-3 py-2 rounded-md border transition-all duration-200
-              ${activeInput === "from" ? "border-blue-500 bg-blue-50" : "border-gray-300 bg-white"}
-              focus:border-blue-500 focus:ring-2 focus:ring-blue-300`}
-            type="text"
-            placeholder="From"
-            value={activeInput === "from" ? searchQuery : from?.name || ""}
-            onClick={() => {
-              setActiveInput("from");
-              setSearchQuery("");
-            }}
-            onChange={(e) => {
-              const value = e.target.value;
-              setSearchQuery(value);
-              setFrom({ name: value, coords: null });
-            }}
-          />
-          {activeInput === "from" && (
-            <div className="absolute top-full left-0 bg-white border w-full max-h-60 overflow-y-auto shadow-md rounded-md z-[2000]">
-              {filteredMarkers.map((marker, index) => (
-                <div
-                  key={index}
-                  className="px-3 py-2 hover:bg-blue-100 cursor-pointer"
-                  onClick={() => {
-                    setFrom({ name: marker.popUp, coords: marker.geocode });
-                    setSearchQuery(marker.popUp);
-                    setActiveInput(null);
-                  }}
-                >
-                  {marker.popUp}
-                </div>
-              ))}
-            </div>
-          )}
+          {/* FROM */}
+          <div className="relative">
+            <input
+              className={`block w-60 max-w-[70vw] px-3 py-2 rounded-md border transition-all duration-200
+                ${activeInput === "from" ? "border-blue-500 bg-blue-50" : "border-gray-300 bg-white"}
+                focus:border-blue-500 focus:ring-2 focus:ring-blue-300`}
+              type="text"
+              placeholder="From"
+              value={activeInput === "from" ? searchQuery : from?.name || ""}
+              onClick={() => {
+                setActiveInput("from");
+                setSearchQuery("");
+              }}
+              onChange={(e) => {
+                const value = e.target.value;
+                setSearchQuery(value);
+                setFrom({ name: value, coords: null });
+              }}
+            />
+            {activeInput === "from" && (
+              <div className="absolute top-full left-0 bg-white border w-full max-h-60 overflow-y-auto shadow-md rounded-md z-[2000]">
+                {filteredMarkers.map((marker, index) => (
+                  <div
+                    key={index}
+                    className="px-3 py-2 hover:bg-blue-100 cursor-pointer"
+                    onClick={() => {
+                      setFrom({ name: marker.popUp, coords: marker.geocode });
+                      setSearchQuery(marker.popUp);
+                      setActiveInput(null);
+                    }}
+                  >
+                    {marker.popUp}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* TO */}
+          <div className="relative">
+            <input
+              className={`block w-60 max-w-[70vw] px-3 py-2 rounded-md border transition-all duration-200
+                ${activeInput === "to" ? "border-blue-500 bg-blue-50" : "border-gray-300 bg-white"}
+                focus:border-blue-500 focus:ring-2 focus:ring-blue-300`}
+              type="text"
+              placeholder="To"
+              value={activeInput === "to" ? searchQuery : to?.name || ""}
+              onClick={() => {
+                setActiveInput("to");
+                setSearchQuery("");
+              }}
+              onChange={(e) => {
+                const value = e.target.value;
+                setSearchQuery(value);
+                setTo({ name: value, coords: null });
+              }}
+            />
+            {activeInput === "to" && (
+              <div className="absolute top-full left-0 bg-white border w-full max-h-60 overflow-y-auto shadow-md rounded-md z-[2000]">
+                {filteredMarkers.map((marker, index) => (
+                  <div
+                    key={index}
+                    className="px-3 py-2 hover:bg-blue-100 cursor-pointer"
+                    onClick={() => {
+                      setTo({ name: marker.popUp, coords: marker.geocode });
+                      setSearchQuery(marker.popUp);
+                      setActiveInput(null);
+                    }}
+                  >
+                    {marker.popUp}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
         </div>
-
-        {/* TO */}
-        <div className="relative">
-          <input
-            className={`block w-60 max-w-[70vw] px-3 py-2 rounded-md border transition-all duration-200
-              ${activeInput === "to" ? "border-blue-500 bg-blue-50" : "border-gray-300 bg-white"}
-              focus:border-blue-500 focus:ring-2 focus:ring-blue-300`}
-            type="text"
-            placeholder="To"
-            value={activeInput === "to" ? searchQuery : to?.name || ""}
-            onClick={() => {
-              setActiveInput("to");
-              setSearchQuery("");
-            }}
-            onChange={(e) => {
-              const value = e.target.value;
-              setSearchQuery(value);
-              setTo({ name: value, coords: null });
-            }}
-          />
-          {activeInput === "to" && (
-            <div className="absolute top-full left-0 bg-white border w-full max-h-60 overflow-y-auto shadow-md rounded-md z-[2000]">
-              {filteredMarkers.map((marker, index) => (
-                <div
-                  key={index}
-                  className="px-3 py-2 hover:bg-blue-100 cursor-pointer"
-                  onClick={() => {
-                    setTo({ name: marker.popUp, coords: marker.geocode });
-                    setSearchQuery(marker.popUp);
-                    setActiveInput(null);
-                  }}
-                >
-                  {marker.popUp}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-      </div>
 
       {/* RIGHT: Profile */}
-      <div
-        className="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center cursor-pointer overflow-hidden ml-3 shrink-0"
-        onClick={() => setShowProfile(true)}
-      >
-        {user?.profile_picture ? (
-          <img
-            src={user.profile_picture}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <span className="text-white font-bold">
-            {user?.first_name?.[0] || "U"}
-          </span>
-        )}
-      </div>
+        <div
+          className="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center cursor-pointer overflow-hidden ml-3 shrink-0"
+          onClick={() => setShowProfile(true)}
+        >
+          {user?.profile_picture ? (
+            <img
+              src={user.profile_picture}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <span className="text-white font-bold">
+              {user?.first_name?.[0] || "U"}
+            </span>
+          )}
+        </div>
       </div>
 
       <div
@@ -541,7 +541,8 @@ function Home() {
           {from?.coords && to?.coords && (
             <RoutingMachine coords={[from.coords, to.coords]}/>
           )}
-        </MapContainer>
+          </MapContainer>
+        </div>
 
         <div className={`absolute bottom-0 left-0 right-0 z-[1000] bg-white transition-transform duration-300
           ${from?.name && to?.name ? 'translate-y-0' : 'translate-y-full'}`}>
