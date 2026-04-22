@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .models import Comment
 from .serializers import CommentSerializer
 from django.shortcuts import get_object_or_404
-
+from django.db.models import Q
 
 
 class CommentsView(APIView):
@@ -22,9 +22,9 @@ class CommentsView(APIView):
             )
 
         comments = Comment.objects.filter(
-            from_location__iexact=from_loc,
-            to_location__iexact=to_loc,
-        ).order_by("-created_at")
+            Q(from_location__iexact=from_loc, to_location__iexact=to_loc) |
+            Q(from_location__iexact=to_loc, to_location__iexact=from_loc)
+            ).order_by("-created_at")
 
         serializer = CommentSerializer(
             comments,
