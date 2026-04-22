@@ -234,7 +234,7 @@ function Home() {
   });
 
   return (
-    <div className="h-screen w-full flex flex-col">
+    <div className="h-screen w-full flex flex-col overflow-y-scroll">
 
       {notif && (
         <div className="fixed top-5 right-5 z-[3000]">
@@ -252,10 +252,10 @@ function Home() {
         {/* LEFT: From + To */}
         <div className="flex flex-col gap-1">
           <h1
-            className="absolute inset-0 flex items-center justify-center text-white opacity-80 pointer-events-none select-none"
+            className="absolute inset-0 hidden md:flex items-center justify-center text-white opacity-80 pointer-events-none select-none"
             style={{
               fontFamily: "'Faster One', cursive",
-              fontSize: "3rem", 
+              fontSize: "3rem",
             }}
           >
             RouTENEO

@@ -99,16 +99,16 @@ function GuestHome() {
 
 
   return (
-    <div>
+    <div className="h-screen w-full flex flex-col overflow-y-scroll">
       <div className="fixed top-0 left-0 w-full bg-blue-800 shadow-md z-[1500] px-4 py-3 flex items-start justify-between">
 
       {/* LEFT: From + To */}
       <div className="flex flex-col gap-1">
         <h1
-          className="absolute inset-0 flex items-center justify-center text-white opacity-80 pointer-events-none select-none"
+          className="absolute inset-0 hidden md:flex items-center justify-center text-white opacity-80 pointer-events-none select-none"
           style={{
             fontFamily: "'Faster One', cursive",
-            fontSize: "3rem", 
+            fontSize: "3rem",
           }}
         >
           RouTENEO
