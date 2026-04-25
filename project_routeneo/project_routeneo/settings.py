@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'accounts',
     'corsheaders',
     'map',
+    'comments',
 ]
 
 MIDDLEWARE = [
@@ -144,7 +145,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWS_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
