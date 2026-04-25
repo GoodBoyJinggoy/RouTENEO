@@ -114,7 +114,7 @@ function Form({ route, method }) {
       {/* what is routeneo */}
       {method === "login" && (
         <div className="flex justify-end text-sm text-gray-500">
-          <span className="underline cursor-pointer"><a href="https://youtu.be/dQw4w9WgXcQ?si=KT64CvCr4Biuhm6c" target="_blank"> ⓘ What is RouTeneo? </a></span>
+          <span className="underline cursor-pointer"><a href="https://docs.google.com/document/d/1dXka9zMsyrCSEKGiNoU-AIELWctAtMWgCVUPvLMI5Fw/edit?usp=sharing" target="_blank"> ⓘ What is RouTeneo? </a></span>
         </div>
       )}
 
