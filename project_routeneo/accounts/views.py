@@ -8,7 +8,10 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
+from django.http import HttpResponse
 
+def home(request):
+    return HttpResponse("RouTENEO Backend Running")
 
 class ChangePasswordView(APIView):
     permission_classes = [IsAuthenticated]
