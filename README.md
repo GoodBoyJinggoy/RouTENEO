@@ -11,7 +11,7 @@ Welcome! This guide will help you set up the **Django backend** and **frontend**
 1. **Clone the repository** 
 
 ```bash
-git clone https://github.com/GoodBoyJinggoy/RouTENEO/tree/django_setup
+git clone https://github.com/GoodBoyJinggoy/RouTENEO/
 ```
 
 2. **Create a virtual environment** 
@@ -82,7 +82,7 @@ Take note of the URL that appears after "Network:".
 * Create a `.env ` file inside the `frontend` folder.
 * Replace `{URL}` with the URL from the previous step.
 ```
-VITE_API_URL='{URL}'
+VITE_API_URL='{URL}:8000/'
 ```
 
 4. **Access the Website**
